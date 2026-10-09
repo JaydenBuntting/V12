@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in | All Friction</title>
+  <link rel="icon" type="image/png" href="favicon6.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="account.css">
+</head>
+<body class="account-page">
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="index.html"><span class="brand-mark">AF</span><span class="brand-name">All Friction</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+  </ul>
+</nav>
+
+<main class="acct-wrap acct-narrow">
+  <span class="acct-kicker">Membership</span>
+  <h1 class="acct-title">Sign in</h1>
+  <p class="acct-lead">Save your progress, pick your subjects and always know what to study next. It's free, and we never see your password.</p>
+
+  <div class="acct-card">
+    <div class="oauth-stack">
+      <button class="acct-btn" id="btnGoogle" type="button">Continue with Google</button>
+    </div>
+    <p class="acct-msg" id="loginMsg" aria-live="polite"></p>
+    <p class="acct-small">By continuing you agree to our <a href="privacy.html">privacy policy</a>. New here? Signing in creates your account automatically.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand"><strong>ALL FRICTION</strong><span>Built to learn. Not to entertain.</span></div>
+  <div class="footer-contact">Contact: <a href="mailto:jaydenbuntting@gmail.com">jaydenbuntting@gmail.com</a></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script>
+(async function () {
+  const msg = document.getElementById('loginMsg');
+  const params = new URLSearchParams(location.search);
+
+  // Remember where to send them after the round-trip to Google/Microsoft
+  const next = AF.safeNext(params.get('next'));
+  if (next) sessionStorage.setItem('af_next', next);
+
+  // If we're already signed in (or just returned from the provider), route onward
+  const user = await AF.getUser();
+  if (user) {
+    const profile = await AF.getProfile(user.id);
+    const dest = (profile && profile.onboarded)
+      ? (AF.safeNext(sessionStorage.getItem('af_next')) || 'dashboard.html')
+      : 'onboarding.html';
+    sessionStorage.removeItem('af_next');
+    location.replace(dest);
+    return;
+  }
+
+  if (params.get('error_description')) msg.textContent = params.get('error_description');
+
+  async function go(provider) {
+    msg.textContent = '';
+    const { error } = await AF.signIn(provider);
+    if (error) msg.textContent = error.message;
+  }
+  document.getElementById('btnGoogle').addEventListener('click', () => go('google'));
+  document.getElementById('btnMicrosoft').addEventListener('click', () => go('azure'));
+})();
+</script>
+</body>
+</html>

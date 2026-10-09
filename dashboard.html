@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | All Friction</title>
+  <link rel="icon" type="image/png" href="favicon6.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="account.css">
+</head>
+<body class="account-page">
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="index.html"><span class="brand-mark">AF</span><span class="brand-name">All Friction</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+  </ul>
+</nav>
+
+<main class="acct-wrap">
+  <span class="acct-kicker" id="dashKicker">Dashboard</span>
+  <h1 class="acct-title" id="dashTitle">Welcome</h1>
+
+  <div class="dash-grid" id="featureRow"></div>
+
+  <div class="acct-card" id="subjectsCard">
+    <h2>Your subjects</h2>
+    <div id="subjectList"></div>
+  </div>
+
+  <div class="acct-card">
+    <h2>Choose your subjects</h2>
+    <p class="acct-small">Tap to add or remove. Levels marked "soon" are still being built.</p>
+    <div id="picker"></div>
+  </div>
+
+  <div class="acct-card">
+    <h2>Your account</h2>
+    <p id="acctSummary"></p>
+    <p style="margin-top:1rem">
+      <a class="acct-btn ghost" href="onboarding.html">Edit my details</a>
+      <button class="acct-btn danger" id="btnDelete" type="button">Delete my account</button>
+    </p>
+    <p class="acct-msg" id="acctMsg"></p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand"><strong>ALL FRICTION</strong><span>Built to learn. Not to entertain.</span></div>
+  <div class="footer-contact">Contact: <a href="mailto:jaydenbuntting@gmail.com">jaydenbuntting@gmail.com</a></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script src="catalogue.js"></script>
+<script>
+(async function () {
+  const CAT = window.AF_CATALOGUE;
+  const $ = id => document.getElementById(id);
+
+  const user = await AF.requireUser();
+  if (!user) return;
+
+  /* tiny DOM helper (builds elements safely, no innerHTML) */
+  function h(tag, props, ...kids) {
+    const el = document.createElement(tag);
+    Object.entries(props || {}).forEach(([k, v]) => {
+      if (k === 'class') el.className = v;
+      else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+      else if (v !== false && v != null) el.setAttribute(k, v);
+    });
+    kids.flat().forEach(k => { if (k != null && k !== false) el.append(k.nodeType ? k : document.createTextNode(k)); });
+    return el;
+  }
+
+  /* ---------- load everything ---------- */
+  const [profile, enrRes, progRes] = await Promise.all([
+    AF.getProfile(user.id),
+    AF.sb.from('enrolments').select('subject,level').eq('user_id', user.id),
+    AF.sb.from('slide_progress').select('standard,lesson,part,last_seen').eq('user_id', user.id)
+  ]);
+  if (!profile || !profile.onboarded) { location.replace('onboarding.html'); return; }
+
+  let enrolments = enrRes.data || [];
+  const rows = progRes.data || [];
+
+  // seen['91164'][lessonIndex] = Set of part numbers
+  const seen = {};
+  rows.forEach(r => {
+    ((seen[r.standard] = seen[r.standard] || {})[r.lesson] = (seen[r.standard][r.lesson] || new Set())).add(r.part);
+  });
+
+  // code -> {standard, subject, level}
+  const STD = {};
+  Object.entries(CAT).forEach(([sKey, subj]) =>
+    Object.entries(subj.levels).forEach(([lKey, lvl]) =>
+      lvl.standards.forEach(std => { STD[std.code] = { std, subject: subj, level: lvl }; })));
+
+  const done = (code, i) => (seen[code] && seen[code][i]) ? seen[code][i].size : 0;
+  const firstUnseen = (code, i, total) => {
+    const set = (seen[code] && seen[code][i]) || new Set();
+    for (let p = 0; p < total; p++) if (!set.has(p)) return p;
+    return 0;
+  };
+
+  /* ---------- header ---------- */
+  const first = (profile.full_name || '').split(' ')[0] || 'there';
+  $('dashKicker').textContent = (profile.schools ? profile.schools.name : '') + ' · Year ' + profile.year_level;
+  $('dashTitle').textContent = 'Kia ora, ' + first + '.';
+  $('acctSummary').textContent = user.email + ' · ' + (profile.schools ? profile.schools.name : '') +
+    ' · Year ' + profile.year_level + ' · Age group: ' + profile.age_group.replace('_', '–').replace('plus', '+');
+
+  /* ---------- continue + up next ---------- */
+  function renderFeatures() {
+    const row = $('featureRow');
+    row.innerHTML = '';
+
+    // Continue = most recently viewed slide
+    const latest = rows.slice().sort((a, b) => new Date(b.last_seen) - new Date(a.last_seen))[0];
+    let continueKey = null;
+    if (latest && STD[latest.standard]) {
+      const { std } = STD[latest.standard];
+      const lesson = std.lessons[latest.lesson];
+      if (lesson) {
+        continueKey = latest.standard + ':' + latest.lesson;
+        row.append(h('div', { class: 'acct-card dash-feature' },
+          h('span', { class: 'dash-label' }, 'Continue where you left off'),
+          h('h2', {}, lesson.name),
+          h('p', {}, std.code + ' · slide ' + (latest.part + 1) + ' of ' + lesson.slides),
+          h('p', { style: 'margin-top:1rem' },
+            h('a', { class: 'acct-btn', href: `${std.page}#l${latest.lesson}-p${latest.part}` }, 'Resume →'))));
+      }
+    }
+
+    // Up next = first incomplete lesson in your enrolled standards
+    let next = null;
+    for (const e of enrolments) {
+      const lvl = CAT[e.subject] && CAT[e.subject].levels[e.level];
+      if (!lvl) continue;
+      for (const std of lvl.standards) {
+        for (let i = 0; i < std.lessons.length; i++) {
+          if (done(std.code, i) < std.lessons[i].slides && (std.code + ':' + i) !== continueKey) { next = { std, i }; break; }
+        }
+        if (next) break;
+      }
+      if (next) break;
+    }
+    if (next) {
+      const l = next.std.lessons[next.i];
+      const p = firstUnseen(next.std.code, next.i, l.slides);
+      row.append(h('div', { class: 'acct-card dash-feature alt' },
+        h('span', { class: 'dash-label' }, 'Recommended next'),
+        h('h2', {}, l.name),
+        h('p', {}, next.std.code + ' · ' + (done(next.std.code, next.i) ? 'partly done' : 'not started')),
+        h('p', { style: 'margin-top:1rem' },
+          h('a', { class: 'acct-btn', href: `${next.std.page}#l${next.i}-p${p}` }, 'Start →'))));
+    }
+
+    if (!row.children.length) {
+      row.append(h('div', { class: 'acct-card dash-feature' },
+        h('span', { class: 'dash-label' }, 'Get started'),
+        h('h2', {}, enrolments.length ? 'You\'re all caught up' : 'Pick your first subject'),
+        h('p', {}, enrolments.length ? 'More lessons are on the way.' : 'Choose a subject and level below and we\'ll build your study path.')));
+    }
+  }
+
+  /* ---------- your subjects ---------- */
+  function renderSubjects() {
+    const box = $('subjectList');
+    box.innerHTML = '';
+    if (!enrolments.length) { box.append(h('p', {}, 'No subjects yet. Choose some below.')); return; }
+
+    enrolments.forEach(e => {
+      const subj = CAT[e.subject], lvl = subj && subj.levels[e.level];
+      if (!lvl) return;
+      box.append(h('h3', { style: 'margin-top:1.2rem' }, subj.name + ' · ' + lvl.name));
+      if (!lvl.standards.length) { box.append(h('p', { class: 'acct-small' }, 'Content coming soon. We\'ll have it ready as fast as we can.')); return; }
+
+      lvl.standards.forEach(std => {
+        const total = std.lessons.reduce((a, l) => a + l.slides, 0);
+        const got = std.lessons.reduce((a, l, i) => a + Math.min(done(std.code, i), l.slides), 0);
+        const pct = Math.round(got / total * 100);
+        box.append(h('div', { style: 'margin-top:.6rem' },
+          h('strong', {}, std.code + ' — ' + std.title),
+          h('div', { class: 'bar' }, h('i', { style: `width:${pct}%` })),
+          h('span', { class: 'acct-small' }, pct + '% of slides viewed')));
+        std.lessons.forEach((l, i) => {
+          const p = Math.min(done(std.code, i), l.slides);
+          const start = firstUnseen(std.code, i, l.slides);
+          box.append(h('div', { class: 'lesson-row' },
+            h('a', { href: `${std.page}#l${i}-p${p >= l.slides ? 0 : start}` }, (i + 1) + '. ' + l.name),
+            h('span', { class: 'pct' }, p >= l.slides ? '✓ done' : p + '/' + l.slides)));
+        });
+      });
+    });
+  }
+
+  /* ---------- subject picker ---------- */
+  function renderPicker() {
+    const box = $('picker');
+    box.innerHTML = '';
+    Object.entries(CAT).forEach(([sKey, subj]) => {
+      box.append(h('h3', {}, subj.name));
+      const row = h('div', { class: 'pick-row' });
+      Object.entries(subj.levels).forEach(([lKey, lvl]) => {
+        const on = enrolments.some(e => e.subject === sKey && e.level === lKey);
+        row.append(h('button', {
+          class: 'pick' + (on ? ' on' : ''), type: 'button',
+          onclick: () => toggle(sKey, lKey, on)
+        }, lvl.name, !lvl.standards.length ? h('small', {}, ' · soon') : null));
+      });
+      box.append(row);
+    });
+  }
+
+  async function toggle(subject, level, isOn) {
+    if (isOn) {
+      await AF.sb.from('enrolments').delete().eq('user_id', user.id).eq('subject', subject).eq('level', level);
+      enrolments = enrolments.filter(e => !(e.subject === subject && e.level === level));
+    } else {
+      const { error } = await AF.sb.from('enrolments').insert({ user_id: user.id, subject, level });
+      if (!error) enrolments.push({ subject, level });
+    }
+    renderAll();
+  }
+
+  function renderAll() { renderFeatures(); renderSubjects(); renderPicker(); }
+  renderAll();
+
+  /* ---------- delete account ---------- */
+  $('btnDelete').addEventListener('click', async () => {
+    if (!confirm('This permanently deletes your account, details and progress. This cannot be undone. Continue?')) return;
+    const { error } = await AF.sb.rpc('delete_my_account');
+    if (error) { $('acctMsg').textContent = error.message; return; }
+    await AF.sb.auth.signOut();
+    location.href = 'index.html';
+  });
+})();
+</script>
+
+    <footer class="site-footer">
+
+        <footer class="site-footer"><div class="footer-brand"><strong>ALL FRICTION</strong><span>Built to learn. Not to entertain.</span></div><div class="footer-contact"></footer>
+
+
+                <div class="footer-contact">
+            <a href="privacy.html">Privacy</a>
+            &nbsp;·&nbsp;
+            Contact:
+            <a href="mailto:jaydenbuntting@gmail.com">
+                jaydenbuntting@gmail.com
+            </a>
+        </div>
+
+    </footer>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your details | All Friction</title>
+  <link rel="icon" type="image/png" href="favicon6.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="account.css">
+</head>
+<body class="account-page">
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="index.html"><span class="brand-mark">AF</span><span class="brand-name">All Friction</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+  </ul>
+</nav>
+
+<main class="acct-wrap acct-narrow">
+  <span class="acct-kicker">Almost there</span>
+  <h1 class="acct-title">About you</h1>
+  <p class="acct-lead">Four quick details so we can tailor your study path. We only ask for what we need.</p>
+
+  <form class="acct-card acct-form" id="profileForm" autocomplete="off">
+    <label>Your name
+      <input type="text" id="fullName" required maxlength="80">
+    </label>
+
+    <label>Your school
+      <div class="school-box">
+        <input type="text" id="schoolSearch" placeholder="Start typing your school's name…" required>
+        <ul class="school-results" id="schoolResults" hidden></ul>
+      </div>
+    </label>
+    <p class="acct-small">Can't find it? Choose "Other / not listed".</p>
+
+    <label>Year level
+      <select id="yearLevel" required>
+        <option value="">Choose…</option>
+        <option value="9">Year 9</option>
+        <option value="10">Year 10</option>
+        <option value="11">Year 11</option>
+        <option value="12">Year 12</option>
+        <option value="13">Year 13</option>
+      </select>
+    </label>
+
+    <label>Age group
+      <select id="ageGroup" required>
+        <option value="">Choose…</option>
+        <option value="under_13">Under 13</option>
+        <option value="13_15">13–15</option>
+        <option value="16_17">16–17</option>
+        <option value="18_plus">18 or over</option>
+      </select>
+    </label>
+
+    <label class="acct-check">
+      <input type="checkbox" id="consent" required>
+      <span>I agree to All Friction storing these details to run my account, as described in the <a href="privacy.html">privacy policy</a>.</span>
+    </label>
+
+    <p style="margin-top:1.4rem"><button class="acct-btn" type="submit">Save and continue</button></p>
+    <p class="acct-msg" id="formMsg" aria-live="polite"></p>
+  </form>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand"><strong>ALL FRICTION</strong><span>Built to learn. Not to entertain.</span></div>
+  <div class="footer-contact">Contact: <a href="mailto:jaydenbuntting@gmail.com">jaydenbuntting@gmail.com</a></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script>
+(async function () {
+  const user = await AF.requireUser();
+  if (!user) return;
+
+  const $ = id => document.getElementById(id);
+  const msg = $('formMsg');
+  let schoolId = null;
+
+  // Pre-fill (also makes this page work as "edit my details")
+  const profile = await AF.getProfile(user.id);
+  if (profile) {
+    $('fullName').value = profile.full_name || '';
+    if (profile.year_level) $('yearLevel').value = String(profile.year_level);
+    if (profile.age_group)  $('ageGroup').value = profile.age_group;
+    if (profile.school_id != null && profile.schools) {
+      schoolId = profile.school_id;
+      $('schoolSearch').value = profile.schools.name;
+    }
+    if (profile.onboarded) $('consent').checked = true;
+  }
+
+  /* ---------- school typeahead ---------- */
+  const search = $('schoolSearch'), results = $('schoolResults');
+  let timer;
+
+  search.addEventListener('input', () => {
+    schoolId = null;                       // typing again invalidates the old choice
+    clearTimeout(timer);
+    const q = search.value.trim();
+    if (q.length < 2) { results.hidden = true; return; }
+    timer = setTimeout(async () => {
+      const safe = q.replace(/[%_]/g, '');
+      const { data, error } = await AF.sb.from('schools')
+        .select('moe_id,name,city').ilike('name', '%' + safe + '%').order('name').limit(8);
+      results.innerHTML = '';
+      if (error || !data || !data.length) { results.hidden = true; return; }
+      data.forEach(s => {
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.append(s.name);
+        if (s.city) { const sm = document.createElement('small'); sm.textContent = ' · ' + s.city; b.append(sm); }
+        b.addEventListener('click', () => {
+          schoolId = s.moe_id;
+          search.value = s.name;
+          results.hidden = true;
+        });
+        li.appendChild(b);
+        results.appendChild(li);
+      });
+      results.hidden = false;
+    }, 250);
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('.school-box')) results.hidden = true; });
+
+  /* ---------- save ---------- */
+  $('profileForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    msg.className = 'acct-msg';
+    if (schoolId === null) { msg.textContent = 'Please pick your school from the list.'; return; }
+
+    const { error } = await AF.sb.from('profiles').update({
+      full_name: $('fullName').value.trim(),
+      school_id: schoolId,
+      year_level: Number($('yearLevel').value),
+      age_group: $('ageGroup').value,
+      onboarded: true,
+      consented_at: (profile && profile.consented_at) || new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }).eq('id', user.id);
+
+    if (error) { msg.textContent = error.message; return; }
+    msg.className = 'acct-msg ok';
+    msg.textContent = 'Saved.';
+    const dest = AF.safeNext(sessionStorage.getItem('af_next')) || 'dashboard.html';
+    sessionStorage.removeItem('af_next');
+    location.href = dest;
+  });
+})();
+</script>
+
+
+</body>
+</html>

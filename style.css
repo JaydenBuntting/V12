@@ -1,0 +1,9737 @@
+/* =========================================================
+   ALL FRICTION — SHARED DESIGN SYSTEM
+   ========================================================= */
+
+:root {
+    --paper: #f5f1e8;
+    --paper-light: #fffdf8;
+    --paper-blue: #dce6ff;
+    --paper-yellow: #ffd447;
+    --paper-red: #ffe1dc;
+    --paper-green: #dcefe4;
+
+    --ink: #161616;
+    --muted: #6b6a64;
+    --rule: #1c1c1c;
+    --soft-rule: rgba(22, 22, 22, .16);
+
+    --blue: #173683;
+    --blue-dark: #1036a7;
+    --red: #ff5b45;
+    --green: #1c8a3c;
+    --yellow: #ffd447;
+
+    --text: #1a1714;
+    --text-soft: #514b44;
+
+    --display: "Archivo", sans-serif;
+    --body: "DM Sans", sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+
+    --nav-h: 76px;
+
+    --shadow-sm: 4px 4px 0 var(--ink);
+    --shadow-md: 7px 7px 0 var(--ink);
+
+    --field: #d7ebe7;
+--field-deep: #8fc8bf;
+}
+
+@media (max-width: 700px) {
+    :root {
+        --nav-h: 68px;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    background: var(--paper);
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-h) + 1rem);
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: var(--body);
+    overflow-x: hidden;
+}
+
+body.lesson-page,
+body.home,
+body.map-subject {
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(23, 87, 255, .045) 32px
+        ),
+        var(--paper);
+}
+
+body.lesson-page.lesson-reading,
+html.lesson-reading {
+    height: 100%;
+    overflow: hidden;
+}
+
+main {
+    flex: 1 1 auto;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    color: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   SHARED NAVIGATION
+   ========================================================= */
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    height: var(--nav-h);
+
+    padding:
+        0
+        clamp(1rem, 4vw, 3rem);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        rgba(245, 241, 232, .97);
+
+    border-bottom: 2px solid var(--ink);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: .95rem;
+    font-weight: 800;
+
+    letter-spacing: -.02em;
+    text-decoration: none;
+}
+
+.brand-mark {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--blue);
+    color: white;
+
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+
+    font-family: var(--mono);
+    font-size: .72rem;
+}
+
+.brand-name {
+    line-height: 1;
+}
+
+.nav ul {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav a:not(.brand) {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+
+    padding: .55rem .9rem;
+
+    border: 2px solid transparent;
+
+    color: var(--ink);
+
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 500;
+
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    transition:
+        background .15s ease,
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.nav a:not(.brand):hover {
+    background: var(--yellow);
+    border-color: var(--ink);
+
+    transform: translate(-2px, -2px);
+    box-shadow: 2px 2px 0 var(--ink);
+}
+
+.nav a:not(.brand)[aria-current="page"] {
+    background: var(--blue);
+    color: white;
+
+    border-color: var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+}
+
+@media (max-width: 700px) {
+    .brand-name {
+        display: none;
+    }
+
+    .nav {
+        padding-inline: 1rem;
+    }
+
+    .nav ul {
+        gap: .2rem;
+    }
+
+    .nav a:not(.brand) {
+        font-size: .68rem;
+        padding-inline: .75rem;
+    }
+}
+
+/* =========================================================
+   SHARED FOOTER
+   ========================================================= */
+
+.site-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+
+    padding:
+        1.5rem
+        clamp(1rem, 4vw, 3rem);
+
+    background: var(--ink);
+    color: var(--paper);
+
+    border-top: 2px solid var(--ink);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+    line-height: 1.5;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.footer-brand strong {
+    color: white;
+    font-family: var(--display);
+    font-size: 1rem;
+}
+
+.footer-brand span {
+    color: rgba(255, 255, 255, .55);
+}
+
+.footer-contact {
+    color: rgba(255, 255, 255, .55);
+    text-align: right;
+}
+
+.footer-contact a {
+    color: var(--yellow);
+    text-decoration: none;
+}
+
+.footer-contact a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+    .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-contact {
+        text-align: left;
+    }
+}
+
+/* =========================================================
+   HOME PAGE
+   ========================================================= */
+
+body.home {
+    --home-paper: #f5f1e8;
+    --home-paper-2: #ebe5d7;
+    --home-ink: #161616;
+    --home-muted: #6b6a64;
+    --home-blue: #093197;
+    --home-blue-light: #dce6ff;
+    --home-yellow: #facc33;
+    --home-red: #f95c48;
+    --home-white: #fffdf8;
+
+    color: var(--home-ink);
+
+    position: relative;
+    overflow-x: hidden;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(23, 87, 255, .055) 32px
+        ),
+        var(--home-paper);
+}
+
+/* =========================================================
+   HOME — ARCHITECTURAL BACKGROUND FIELD
+   ========================================================= */
+
+body.home::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 0;
+    pointer-events: none;
+
+    background:
+
+        /* -----------------------------------------
+           LARGE SOFT CIRCULAR FIELDS
+           ----------------------------------------- */
+
+        radial-gradient(
+            circle at 8% 28%,
+            rgba(143, 200, 191, .15) 0,
+            rgba(143, 200, 191, .15) 145px,
+            transparent 146px
+        ),
+
+        radial-gradient(
+            circle at 92% 17%,
+            rgba(143, 200, 191, .12) 0,
+            rgba(143, 200, 191, .12) 190px,
+            transparent 191px
+        ),
+
+        radial-gradient(
+            circle at 91% 72%,
+            rgba(143, 200, 191, .13) 0,
+            rgba(143, 200, 191, .13) 240px,
+            transparent 241px
+        ),
+
+        radial-gradient(
+            circle at 16% 84%,
+            rgba(143, 200, 191, .08) 0,
+            rgba(143, 200, 191, .08) 180px,
+            transparent 181px
+        ),
+
+
+        /* -----------------------------------------
+           OUTLINED CIRCLES
+           ----------------------------------------- */
+
+        radial-gradient(
+            circle at 8% 28%,
+            transparent 0,
+            transparent 70px,
+            rgba(143, 200, 191, .42) 71px,
+            rgba(143, 200, 191, .42) 73px,
+            transparent 74px
+        ),
+
+        radial-gradient(
+            circle at 92% 17%,
+            transparent 0,
+            transparent 145px,
+            rgba(143, 200, 191, .30) 146px,
+            rgba(143, 200, 191, .30) 148px,
+            transparent 149px
+        ),
+
+        radial-gradient(
+            circle at 91% 72%,
+            transparent 0,
+            transparent 170px,
+            rgba(143, 200, 191, .26) 171px,
+            rgba(143, 200, 191, .26) 173px,
+            transparent 174px
+        ),
+
+        radial-gradient(
+            circle at 16% 84%,
+            transparent 0,
+            transparent 105px,
+            rgba(143, 200, 191, .22) 106px,
+            rgba(143, 200, 191, .22) 108px,
+            transparent 109px
+        ),
+
+
+        /* -----------------------------------------
+           THIN ARCHITECTURAL GRID LINES
+           ----------------------------------------- */
+
+        linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 14.5%,
+            rgba(143, 200, 191, .20) 14.55%,
+            transparent 14.62%
+        ),
+
+        linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 76%,
+            rgba(143, 200, 191, .14) 76.05%,
+            transparent 76.12%
+        ),
+
+        linear-gradient(
+            0deg,
+            transparent 0,
+            transparent 74%,
+            rgba(143, 200, 191, .14) 74.05%,
+            transparent 74.12%
+        ),
+
+
+        /* -----------------------------------------
+           LONG DIAGONALS
+           ----------------------------------------- */
+
+        linear-gradient(
+            132deg,
+            transparent 0,
+            transparent 39%,
+            rgba(143, 200, 191, .16) 39.05%,
+            transparent 39.12%
+        ),
+
+        linear-gradient(
+            18deg,
+            transparent 0,
+            transparent 66%,
+            rgba(143, 200, 191, .12) 66.05%,
+            transparent 66.12%
+        ),
+
+        linear-gradient(
+            155deg,
+            transparent 0,
+            transparent 81%,
+            rgba(143, 200, 191, .10) 81.05%,
+            transparent 81.12%
+        );
+}
+
+
+/* =========================================================
+   SECONDARY GEOMETRIC LAYER
+   ========================================================= */
+
+body.home::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 0;
+    pointer-events: none;
+
+    opacity: .8;
+
+    background:
+
+        /* -----------------------------------------
+           LARGE ROTATED RECTANGLE
+           ----------------------------------------- */
+
+        linear-gradient(
+            145deg,
+            transparent 0,
+            transparent 43%,
+            rgba(143, 200, 191, .055) 43%,
+            rgba(143, 200, 191, .055) 53%,
+            transparent 53%
+        ),
+
+        /* -----------------------------------------
+           OFFSET TRIANGULAR FIELD
+           ----------------------------------------- */
+
+        linear-gradient(
+            28deg,
+            transparent 0,
+            transparent 58%,
+            rgba(143, 200, 191, .045) 58%,
+            rgba(143, 200, 191, .045) 76%,
+            transparent 76%
+        ),
+
+        /* -----------------------------------------
+           SMALL CROSS / REGISTRATION MARKS
+           ----------------------------------------- */
+
+        linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 9.8%,
+            rgba(143, 200, 191, .24) 9.9%,
+            rgba(143, 200, 191, .24) 10%,
+            transparent 10.1%
+        ),
+
+        linear-gradient(
+            0deg,
+            transparent 0,
+            transparent 30%,
+            rgba(143, 200, 191, .18) 30.05%,
+            rgba(143, 200, 191, .18) 30.15%,
+            transparent 30.2%
+        );
+}
+
+
+/* =========================================================
+   KEEP THE ACTUAL CONTENT ABOVE THE FIELD
+   ========================================================= */
+
+body.home > .nav,
+body.home > main,
+body.home > .site-footer {
+    position: relative;
+    z-index: 1;
+}
+
+body.home.map::before {
+    display: none;
+}
+
+.home .hero {
+    min-height: calc(100vh - var(--nav-h));
+
+    padding:
+        clamp(2rem, 5vw, 4rem)
+        clamp(1rem, 5vw, 4rem)
+        clamp(3rem, 7vw, 6rem);
+
+    position: relative;
+}
+
+.home .hero-label {
+    width: min(1200px, 100%);
+    margin: 0 auto 2.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: .8rem;
+
+    border-bottom: 2px solid var(--home-ink);
+
+    color: var(--home-muted);
+
+    font-family: var(--mono);
+    font-size: .66rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+}
+
+.home .hero-main {
+    width: min(1200px, 100%);
+    margin: auto;
+
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(280px, .75fr);
+
+    align-items: end;
+    gap: clamp(2rem, 7vw, 8rem);
+}
+
+.home .hero-kicker {
+    margin-bottom: 1rem;
+
+    color: var(--home-blue);
+
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+}
+
+/* =========================================================
+   HOME TITLE
+   Everything. Everywhere. All at Once.
+   ========================================================= */
+
+/* =========================================================
+   HERO TITLE — ALL FRICTION
+   ========================================================= */
+
+.home .hero .title {
+
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    font-family: "Archivo", sans-serif;
+    font-weight: 900;
+
+    font-size: clamp(5rem, 15vw, 12rem);
+
+    line-height: .78;
+    letter-spacing: -.075em;
+
+    color: var(--home-ink);
+
+    white-space: normal;
+}
+
+
+.home .hero .title-line {
+    display: block;
+}
+
+
+.home .hero .title-all {
+    color: var(--home-blue);
+}
+
+
+.home .hero .title-friction {
+
+    position: relative;
+    isolation: isolate;
+
+    padding-left: .18em;
+
+    color: var(--home-ink);
+}
+
+
+/* Angled red underline */
+
+.home .hero .title-friction::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: .18em;
+    right: -.02em;
+
+    bottom: -.05em;
+
+    height: .075em;
+
+    background: var(--home-red);
+
+    transform: rotate(-1deg);
+
+    transform-origin: left center;
+
+    z-index: -1;
+}
+
+
+/* Black */
+
+.home .title-everything {
+
+    color:
+        var(--home-ink);
+}
+
+
+/* Blue */
+
+.home .title-everywhere {
+
+    color:
+        var(--home-blue);
+
+    margin-left:
+        .02em;
+}
+
+.home .manifesto .title {
+
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    font-family: "Archivo", sans-serif;
+
+    font-weight: 900;
+
+    font-size: clamp(4.8rem, 11vw, 10rem);
+
+    line-height: .78;
+
+    letter-spacing: -.075em;
+
+    color: var(--home-ink);
+
+    white-space: normal;
+}
+
+.home .manifesto .title-line {
+    display: block;
+    width: max-content;
+}
+
+.home .manifesto .title-everything {
+    color: var(--home-ink);
+}
+
+.home .manifesto .title-everywhere {
+    color: var(--home-blue);
+}
+
+.home .manifesto .title-subline {
+
+    display: block;
+
+    margin-top: .22em;
+    margin-left: .03em;
+
+    color: var(--home-blue);
+
+    font-family: "Archivo", sans-serif;
+
+    font-size: clamp(1.55rem, 3vw, 2.9rem);
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: -.045em;
+}
+
+.home .manifesto .title-context {
+
+    color: var(--home-muted);
+
+    font-family:
+        "IBM Plex Mono",
+        monospace;
+
+    font-size: .38em;
+    font-weight: 500;
+
+    letter-spacing: .025em;
+
+    vertical-align: middle;
+
+    white-space: nowrap;
+}
+
+
+
+/* ---------------------------------------------------------
+   Smaller third line
+   --------------------------------------------------------- */
+
+.home .title-subline {
+
+    display:
+        block;
+
+    margin-top:
+        .22em;
+
+    margin-left:
+        .03em;
+
+    color:
+        var(--home-blue);
+
+    font-family:
+        "Archivo",
+        sans-serif;
+
+    font-size:
+        clamp(1.55rem, 3vw, 2.9rem);
+
+    font-weight:
+        700;
+
+    line-height:
+        1;
+
+    letter-spacing:
+        -.045em;
+}
+
+
+/* ---------------------------------------------------------
+   "(For NCEA)"
+   --------------------------------------------------------- */
+
+.home .title-context {
+
+    color:
+        var(--home-muted);
+
+    font-family:
+        "IBM Plex Mono",
+        monospace;
+
+    font-size:
+        .38em;
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        .025em;
+
+    vertical-align:
+        middle;
+
+    white-space:
+        nowrap;
+}
+
+
+
+.home .hero-message {
+    max-width: 420px;
+    padding-bottom: .5rem;
+}
+
+.home .hero-lines {
+    display: flex;
+    flex-direction: column;
+    gap: .05rem;
+}
+
+.home .hero-line {
+    display: block;
+
+    color: var(--home-ink);
+
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    font-weight: 700;
+
+    line-height: 1.05;
+    letter-spacing: -.035em;
+
+    opacity: 0;
+    transform: translateY(14px);
+
+    animation: homeLineIn .6s ease forwards;
+}
+
+.home .hero-line-1 {
+    animation-delay: .12s;
+}
+
+.home .hero-line-2 {
+    color: var(--home-blue);
+    animation-delay: .32s;
+}
+
+@keyframes homeLineIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.home .hero-description {
+    max-width: 36ch;
+    margin-top: 1.5rem;
+
+    color: var(--home-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.home .hero-button {
+    display: inline-flex;
+    align-items: center;
+    gap: .8rem;
+
+    margin-top: 1.75rem;
+    padding: .9rem 1.1rem;
+
+    background: var(--home-blue);
+    color: white;
+
+    border: 2px solid var(--home-ink);
+    box-shadow: 4px 4px 0 var(--home-ink);
+
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.home .hero-button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--home-ink);
+}
+
+.home .hero-button span {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.home .facts {
+    width: min(1200px, 100%);
+    margin: 4rem auto 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    list-style: none;
+}
+
+.home .facts li {
+    min-height: 78px;
+    padding: 1rem;
+
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+
+    border-top: 2px solid var(--home-ink);
+    border-bottom: 2px solid var(--home-ink);
+    border-right: 2px solid var(--home-ink);
+
+    background: var(--home-white);
+
+    font-family: var(--mono);
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+
+.home .facts li:first-child {
+    border-left: 2px solid var(--home-ink);
+    background: var(--home-yellow);
+}
+
+.home .facts li:nth-child(2) {
+    background: var(--home-blue-light);
+}
+
+.home .facts li:nth-child(3) {
+    background: var(--home-red);
+}
+
+.home .fact-number {
+    color: var(--home-blue);
+    font-family: var(--display);
+    font-size: .8rem;
+    font-weight: 800;
+}
+
+.home .facts li:first-child .fact-number {
+    color: var(--home-ink);
+}
+
+.home .manifesto {
+    width: min(1200px, calc(100% - 2rem));
+    margin-inline: auto;
+
+    padding:
+        clamp(5rem, 10vw, 9rem) 0;
+}
+
+.home .manifesto-heading {
+    display: grid;
+    grid-template-columns: .7fr 1.7fr;
+    column-gap: 4rem;
+    row-gap: 1.5rem;
+
+    margin-bottom: 4rem;
+}
+
+.home .section-label {
+    align-self: start;
+
+    color: var(--home-blue);
+
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+}
+
+.home .manifesto-heading h2 {
+    max-width: 11ch;
+
+    color: var(--home-ink);
+
+    font-family: var(--display);
+    font-size: clamp(3rem, 7vw, 6.8rem);
+    font-weight: 800;
+    line-height: .88;
+    letter-spacing: -.065em;
+}
+
+.home .manifesto-heading h2 span {
+    display: block;
+    color: var(--home-blue);
+}
+
+.home .manifesto-heading p {
+    grid-column: 2;
+    max-width: 50ch;
+
+    color: var(--home-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.home .manifesto-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.home .manifesto-grid .card {
+    min-height: 380px;
+
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+
+    border: 2px solid var(--home-ink);
+    box-shadow: 6px 6px 0 var(--home-ink);
+
+    transform: rotate(var(--card-rotation));
+}
+
+.home .manifesto-grid .card:nth-child(1) {
+    --card-rotation: -.7deg;
+    background: var(--home-yellow);
+}
+
+.home .manifesto-grid .card:nth-child(2) {
+    --card-rotation: .5deg;
+    background: var(--home-blue-light);
+}
+
+.home .manifesto-grid .card:nth-child(3) {
+    --card-rotation: -.3deg;
+    background: var(--home-red);
+}
+
+.home .card-number {
+    color: var(--home-blue);
+    font-family: var(--mono);
+    font-size: .68rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+}
+
+.home .manifesto-grid .card h3 {
+    max-width: 8ch;
+    margin-top: 4rem;
+
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 800;
+    line-height: .9;
+    letter-spacing: -.055em;
+}
+
+.home .manifesto-grid .card p {
+    max-width: 30ch;
+    margin-top: 1.5rem;
+
+    color: rgba(22, 22, 22, .72);
+
+    font-size: .95rem;
+    line-height: 1.65;
+}
+
+.home .photo-divider {
+    width: min(1400px, calc(100% - 2rem));
+    margin-inline: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1.35fr 1fr;
+    gap: 10px;
+
+    padding: 10px 0;
+
+    border-top: 2px solid var(--home-ink);
+    border-bottom: 2px solid var(--home-ink);
+}
+
+.home .photo {
+    height: clamp(260px, 35vw, 440px);
+
+    position: relative;
+    overflow: hidden;
+
+    border: 2px solid var(--home-ink);
+    background: #ddd;
+
+    transform: rotate(var(--photo-rotation, 0deg));
+}
+
+.home .photo-1 { --photo-rotation: -1deg; }
+
+.home .photo-2 {
+    --photo-rotation: .4deg;
+    transform: translateY(-12px) rotate(var(--photo-rotation));
+}
+
+.home .photo-3 { --photo-rotation: 1deg; }
+
+.home .photo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    object-fit: cover;
+    filter: saturate(.9) contrast(1.02);
+
+    transition: transform .4s ease;
+}
+
+.home .photo:hover img {
+    transform: scale(1.04);
+}
+
+.home .site-footer {
+    background: var(--home-ink);
+    color: var(--home-paper);
+}
+
+.home .footer-contact a {
+    color: var(--home-yellow);
+}
+
+html.js body.home .pop {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+html.js body.home .pop.in {
+    animation:
+        homeCardIn
+        .55s
+        cubic-bezier(.22, .8, .25, 1)
+        both;
+}
+
+@keyframes homeCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 800px) {
+    .home .hero {
+        min-height: auto;
+    }
+
+    .home .hero-main {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .home .hero-label {
+        margin-bottom: 3rem;
+        font-size: .58rem;
+    }
+
+   .home .title {
+
+    font-size:
+        clamp(4.2rem, 20vw, 8rem);
+
+    line-height:
+        .8;
+}
+
+
+.home .title-subline {
+
+    font-size:
+        clamp(1.35rem, 5.5vw, 2rem);
+}
+
+    .home .hero-message {
+        max-width: 30rem;
+    }
+
+    .home .facts {
+        grid-template-columns: 1fr;
+        margin-top: 3rem;
+    }
+
+    .home .facts li {
+        border-left: 2px solid var(--home-ink);
+    }
+
+    .home .photo-divider {
+        width: calc(100% - 1rem);
+        grid-template-columns: 1fr;
+        gap: .8rem;
+        border: 0;
+    }
+
+    .home .photo {
+        height: 260px;
+        transform: none;
+    }
+
+    .home .photo-2 {
+        transform: none;
+        margin-top: 0;
+    }
+
+    .home .manifesto {
+        width: calc(100% - 2rem);
+        padding-top: 5rem;
+    }
+
+    .home .manifesto-heading {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .home .manifesto-heading p {
+        grid-column: auto;
+    }
+
+    .home .manifesto-heading h2 {
+        max-width: 10ch;
+        font-size: clamp(3rem, 15vw, 5rem);
+    }
+
+    .home .manifesto-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home .manifesto-grid .card {
+        min-height: 340px;
+    }
+}
+
+@media (max-width: 500px) {
+    .home .hero-label span:last-child {
+        display: none;
+    }
+
+    .home .hero-label {
+        justify-content: flex-start;
+    }
+
+    .home .hero-button {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* =========================================================
+   SUBJECTS PAGE
+   ========================================================= */
+
+body.map-subject {
+    --subject-paper: #f5f1e8;
+    --subject-ink: #161616;
+    --subject-muted: #686761;
+    --subject-blue: #1757ff;
+    --subject-blue-soft: #dce6ff;
+    --subject-yellow: #ffd447;
+    --subject-red-soft: #ffe1dc;
+
+    color: var(--subject-ink);
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(23, 87, 255, .045) 32px
+        ),
+        var(--subject-paper);
+}
+
+body.map-subject::before {
+    display: none;
+}
+
+.map-subject .subjects-head {
+    width: min(1200px, calc(100% - 2rem));
+    margin-inline: auto;
+
+    padding:
+        clamp(3rem, 6vw, 6rem)
+        0
+        clamp(3rem, 7vw, 6rem);
+}
+
+.map-subject .subjects-meta {
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: .8rem;
+
+    border-bottom: 2px solid var(--subject-ink);
+
+    color: var(--subject-muted);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .08em;
+}
+
+.map-subject .subjects-head-grid {
+    margin-top: clamp(2rem, 4vw, 4rem);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(260px, .6fr);
+    gap: clamp(2rem, 8vw, 8rem);
+
+    align-items: end;
+}
+
+.map-subject .subjects-kicker {
+    margin-bottom: 1rem;
+
+    color: var(--subject-blue);
+
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .08em;
+}
+
+.map-subject .subjects-head h1 {
+    margin: 0;
+
+    color: var(--subject-ink);
+
+    font-family: var(--display);
+    font-size: clamp(5rem, 14vw, 11rem);
+    font-weight: 900;
+    line-height: .78;
+    letter-spacing: -.075em;
+}
+
+.map-subject .subjects-intro {
+    max-width: 33ch;
+    margin: 0;
+
+    color: var(--subject-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.map-subject .subject-directory {
+    width: min(1200px, calc(100% - 2rem));
+    margin-inline: auto;
+    padding-bottom: clamp(5rem, 9vw, 8rem);
+}
+
+.map-subject .directory-label {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+
+    margin-bottom: 1.25rem;
+
+    color: var(--subject-blue);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .08em;
+}
+
+.map-subject .directory-label span:first-child {
+    color: var(--subject-ink);
+    font-weight: 700;
+}
+
+.map-subject .subject-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+
+    align-items: start;
+}
+
+.map-subject .subject-card {
+    position: relative;
+    overflow: hidden;
+
+    min-width: 0;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+
+    border: 2px solid var(--subject-ink);
+    box-shadow: 7px 7px 0 var(--subject-ink);
+
+    color: var(--subject-ink);
+
+    transform: rotate(var(--subject-rotation));
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.map-subject .subject-chem {
+    --subject-rotation: -.5deg;
+    background: var(--subject-yellow);
+}
+
+.map-subject .subject-biology {
+    --subject-rotation: .5deg;
+    background: var(--subject-blue-soft);
+}
+
+.map-subject .subject-card:hover {
+    transform:
+        translateY(-5px)
+        rotate(var(--subject-rotation));
+
+    box-shadow: 10px 10px 0 var(--subject-ink);
+}
+
+.map-subject .subject-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.map-subject .subject-number {
+    font-family: var(--mono);
+    font-size: .72rem;
+}
+
+.map-subject .subject-type {
+    color: rgba(22, 22, 22, .55);
+    font-family: var(--mono);
+    font-size: .58rem;
+    letter-spacing: .08em;
+}
+
+.map-subject .subject-card h2 {
+    margin-top: clamp(4rem, 7vw, 6rem);
+
+    color: var(--subject-ink);
+
+    font-family: var(--display);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 800;
+    line-height: .83;
+    letter-spacing: -.065em;
+}
+
+.map-subject .subject-description {
+    max-width: 40ch;
+    margin-top: 1.75rem;
+
+    color: rgba(22, 22, 22, .75);
+    font-size: .96rem;
+    line-height: 1.65;
+}
+
+.map-subject .subject-note {
+    margin-top: .5rem;
+
+    color: rgba(22, 22, 22, .52);
+
+    font-family: var(--mono);
+    font-size: .62rem;
+}
+
+.map-subject .subject-levels {
+    margin-top: 2.5rem;
+    border-top: 2px solid var(--subject-ink);
+}
+
+.map-subject .subject-level-group {
+    border-bottom: 2px solid rgba(22, 22, 22, .4);
+}
+
+.map-subject .subject-levels button.level {
+    width: 100%;
+    min-height: 58px;
+    margin: 0;
+    padding: .9rem 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: transparent;
+    color: var(--subject-ink);
+
+    border: 0;
+
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        padding .15s ease,
+        color .15s ease;
+}
+
+.map-subject .subject-levels button.level:hover {
+    padding-left: .4rem;
+    color: var(--subject-blue);
+    background: transparent;
+    transform: none;
+}
+
+.map-subject .subject-levels .arrow {
+    transition: transform .2s ease;
+}
+
+.map-subject .subject-levels .level.open .arrow {
+    transform: rotate(180deg);
+}
+
+.map-subject .subject-levels .level-content {
+    max-height: 0;
+    overflow: hidden;
+
+    background: transparent;
+
+    transition: max-height .35s ease;
+}
+
+.map-subject .subject-levels .level-content > p {
+    margin: .75rem 0 .5rem;
+
+    color: rgba(22, 22, 22, .5);
+
+    font-family: var(--mono);
+    font-size: .58rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.map-subject .subject-levels .level-content ul {
+    margin: .5rem 0 1rem;
+    padding: 0;
+
+    list-style: none;
+    border: 0;
+}
+
+.map-subject .subject-levels .level-content li {
+    display: block;
+
+    margin: 0;
+    padding: .75rem 0;
+
+    border-top: 1px solid rgba(22, 22, 22, .17);
+
+    color: rgba(22, 22, 22, .72);
+
+    font-size: .84rem;
+    line-height: 1.55;
+}
+
+.map-subject .subject-levels .level-content li b {
+    margin-right: .55rem;
+
+    color: var(--subject-blue);
+
+    font-family: var(--mono);
+    font-size: .68rem;
+    font-weight: 500;
+}
+
+.map-subject a.standards {
+    width: 100%;
+    margin: 0;
+    padding: .75rem 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    background: transparent;
+    color: var(--subject-ink);
+
+    border: 0;
+
+    font-size: .84rem;
+    line-height: 1.55;
+    text-decoration: none;
+
+    transition:
+        padding .15s ease,
+        color .15s ease;
+}
+
+.map-subject a.standards::after {
+    content: "→";
+    flex-shrink: 0;
+
+    color: var(--subject-blue);
+
+    font-size: 1rem;
+    transform: translateX(-4px);
+
+    transition: transform .15s ease;
+}
+
+.map-subject a.standards:hover {
+    padding-left: .35rem;
+    color: var(--subject-blue);
+}
+
+.map-subject a.standards:hover::after {
+    transform: translateX(0);
+}
+
+.map-subject .site-footer {
+    background: var(--subject-ink);
+}
+
+@media (max-width: 800px) {
+    .map-subject .subjects-head {
+        width: calc(100% - 2rem);
+        padding-top: 2.5rem;
+    }
+
+    .map-subject .subjects-head-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .map-subject .subjects-head h1 {
+        font-size: clamp(5rem, 22vw, 8rem);
+    }
+
+    .map-subject .subject-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .map-subject .subject-card {
+        padding: 1.5rem;
+    }
+
+    .map-subject .subject-card h2 {
+        margin-top: 3.5rem;
+        font-size: clamp(3rem, 17vw, 5rem);
+    }
+}
+
+@media (max-width: 500px) {
+    .map-subject .subjects-meta span:last-child {
+        display: none;
+    }
+
+    .map-subject .subjects-meta {
+        justify-content: flex-start;
+    }
+}
+
+/* =========================================================
+   91164 — STANDARD OVERVIEW
+   ========================================================= */
+
+.lesson-page {
+    --lesson-blue: #1757ff;
+    --lesson-soft: #dce6ff;
+    --lesson-yellow: #ffd447;
+
+    min-height: 100vh;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(23, 87, 255, .045) 32px
+        ),
+        var(--paper);
+}
+
+.lesson-page::before {
+    display: none;
+}
+
+.standard-app {
+    min-height: calc(100vh - var(--nav-h));
+}
+
+.standard-overview {
+    display: none;
+
+    width: min(1180px, calc(100% - 2rem));
+    margin: 0 auto;
+
+    padding:
+        clamp(2.75rem, 6vw, 6rem)
+        0
+        clamp(4rem, 8vw, 7rem);
+}
+
+.standard-overview.active {
+    display: block;
+}
+
+.standard-header {
+    padding-bottom: clamp(3rem, 6vw, 6rem);
+}
+
+.standard-header-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+
+    padding-bottom: .8rem;
+
+    border-bottom: 2px solid var(--ink);
+}
+
+.standard-code-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1rem;
+}
+
+.standard-code,
+.standard-index {
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.standard-index {
+    color: var(--blue);
+}
+
+.standard-header-grid {
+    margin-top: clamp(2.5rem, 5vw, 5rem);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr);
+    gap: clamp(2rem, 8vw, 8rem);
+
+    align-items: end;
+}
+
+.standard-kicker {
+    display: block;
+    margin-bottom: .8rem;
+
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .08em;
+}
+
+.standard-header h1 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: clamp(5.5rem, 16vw, 13rem);
+    font-weight: 900;
+    line-height: .75;
+    letter-spacing: -.08em;
+}
+
+.standard-header p {
+    max-width: 38ch;
+    margin: 0 0 .4rem;
+
+    color: var(--muted);
+
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.overview-section {
+    margin-top: 3.5rem;
+}
+
+.overview-section-heading {
+    display: flex;
+    align-items: baseline;
+    gap: .8rem;
+
+    margin-bottom: 1rem;
+    padding-bottom: .7rem;
+
+    border-bottom: 2px solid var(--ink);
+}
+
+.overview-section-heading > span {
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .68rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+}
+
+.overview-section-heading h2 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.035em;
+}
+
+.overview-note {
+    position: relative;
+
+    max-width: 900px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: clamp(1.35rem, 3vw, 2.5rem);
+
+    background: var(--paper-light);
+
+    border: 2px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+
+    color: var(--text);
+
+    font-size: .95rem;
+    line-height: 1.7;
+}
+
+.overview-note--yellow {
+    background: var(--paper-yellow);
+}
+
+.overview-note--blue {
+    background: var(--paper-blue);
+}
+
+.overview-note p {
+    margin: 0;
+}
+
+.overview-note p + p {
+    margin-top: 1rem;
+}
+
+.overview-note ul,
+.overview-note ol {
+    margin: 1rem 0 0;
+    padding-left: 1.35rem;
+}
+
+.overview-note li + li {
+    margin-top: .4rem;
+}
+
+.overview-note hr {
+    height: 2px;
+    margin: 1.25rem 0;
+
+    border: 0;
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            rgba(22, 22, 22, .22),
+            transparent
+        );
+}
+
+.overview-note b {
+    font-weight: 800;
+}
+
+.lesson-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.lesson-card {
+    width: 100%;
+    min-height: 90px;
+
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr) auto;
+    align-items: center;
+
+    gap: 1.25rem;
+
+    padding: 1rem .9rem;
+
+    background: rgba(255, 253, 248, .78);
+    color: var(--ink);
+
+    border: 0;
+    border-bottom: 2px solid var(--ink);
+
+    text-align: left;
+    cursor: pointer;
+
+    transition:
+        background .15s ease,
+        padding .15s ease,
+        transform .15s ease;
+}
+
+.lesson-card:first-child {
+    border-top: 2px solid var(--ink);
+}
+
+.lesson-card:hover {
+    padding-left: 1.25rem;
+    padding-right: .55rem;
+
+    background: var(--paper-yellow);
+    transform: translateX(3px);
+}
+
+.lesson-card-number {
+    width: 58px;
+    height: 58px;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--lesson-soft);
+    border: 2px solid var(--ink);
+
+    box-shadow: 3px 3px 0 var(--ink);
+
+    font-family: var(--mono);
+    font-size: .72rem;
+}
+
+.lesson-card:nth-child(2) .lesson-card-number {
+    background: var(--paper-yellow);
+}
+
+.lesson-card:nth-child(3) .lesson-card-number {
+    background: var(--paper-red);
+}
+
+.lesson-card:nth-child(4) .lesson-card-number {
+    background: var(--paper-green);
+}
+
+.lesson-card:nth-child(5) .lesson-card-number {
+    background: var(--paper-blue);
+}
+
+.lesson-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.lesson-card-content strong {
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: clamp(1.15rem, 2.4vw, 2rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.025em;
+}
+
+.lesson-card-content small {
+    max-width: 70ch;
+
+    color: var(--muted);
+
+    font-size: .82rem;
+    line-height: 1.45;
+}
+
+.lesson-card-arrow {
+    color: var(--blue);
+
+    font-family: var(--display);
+    font-size: 1.6rem;
+
+    transition: transform .15s ease;
+}
+
+.lesson-card:hover .lesson-card-arrow {
+    transform: translateX(5px);
+}
+
+@media (max-width: 700px) {
+    .standard-header-meta {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    .standard-header-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .standard-header h1 {
+        font-size: clamp(5rem, 27vw, 8rem);
+    }
+
+    .lesson-card {
+        grid-template-columns: 54px minmax(0, 1fr) auto;
+        gap: .75rem;
+        min-height: 78px;
+    }
+
+    .lesson-card-number {
+        width: 48px;
+        height: 48px;
+        font-size: .65rem;
+    }
+
+    .lesson-card-content strong {
+        font-size: 1.05rem;
+    }
+
+    .lesson-card-content small {
+        font-size: .76rem;
+    }
+}
+
+/* =========================================================
+   91164 — LESSON READER
+   ========================================================= */
+
+.lesson-mode {
+    display: none;
+
+    position: relative;
+
+    height: calc(100dvh - var(--nav-h));
+    min-height: 0;
+
+    flex-direction: column;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(23, 87, 255, .045) 32px
+        ),
+        var(--paper);
+
+    overflow: hidden;
+}
+
+.lesson-mode.active {
+    display: flex;
+}
+
+.lesson-topbar {
+    position: absolute;
+    inset: 0 0 auto 0;
+
+    z-index: 10;
+
+    min-height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    padding:
+        .65rem
+        clamp(1rem, 4vw, 3rem);
+
+    background:
+        rgba(245, 241, 232, .98);
+
+    border-bottom: 2px solid var(--ink);
+}
+
+.lesson-location {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .66rem;
+}
+
+.back-to-standard {
+    display: inline-flex;
+    align-items: center;
+
+    padding: .48rem .65rem;
+
+    background: var(--blue);
+    color: white;
+
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+
+    cursor: pointer;
+
+    font-family: var(--mono);
+    font-size: .68rem;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.back-to-standard:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--ink);
+}
+
+.location-divider {
+    color: rgba(22, 22, 22, .35);
+}
+
+#lessonTitle,
+#partTitle {
+    overflow: hidden;
+
+    color: var(--ink);
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#lessonTitle {
+    font-weight: 600;
+}
+
+#partTitle {
+    color: var(--muted);
+}
+
+.lesson-position {
+    flex-shrink: 0;
+
+    min-width: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+
+    padding: .48rem .6rem;
+
+    background: var(--yellow);
+
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+
+    color: var(--ink);
+
+    font-family: var(--mono);
+    font-size: .66rem;
+}
+
+#lessonNumber {
+    font-weight: 700;
+}
+
+.lesson-viewport {
+    flex: 1 1 auto;
+    min-height: 0;
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+.lesson-instance {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.lesson-instance.active {
+    display: block;
+}
+
+.lesson-slide {
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    overflow-y: auto;
+
+    padding:
+        calc(64px + clamp(1.75rem, 4vw, 3rem))
+        clamp(1rem, 5vw, 4rem)
+        3rem;
+}
+
+.lesson-slide.active {
+    display: block;
+}
+
+.lesson-slide::-webkit-scrollbar {
+    width: 8px;
+}
+
+.lesson-slide::-webkit-scrollbar-track {
+    background: rgba(22, 22, 22, .04);
+}
+
+.lesson-slide::-webkit-scrollbar-thumb {
+    background: rgba(22, 22, 22, .22);
+}
+
+.part-heading {
+    width: min(1100px, 100%);
+    margin: 0 auto 1.25rem;
+
+    padding-bottom: .9rem;
+
+    border-bottom: 2px solid var(--ink);
+}
+
+.part-heading > span {
+    display: block;
+    margin-bottom: .45rem;
+
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.part-heading h2 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: clamp(2.1rem, 5vw, 4.7rem);
+    font-weight: 800;
+    line-height: .92;
+    letter-spacing: -.055em;
+}
+
+.part-heading h2:focus {
+    outline: 0;
+}
+
+/* =========================================================
+   LESSON COVER
+   ========================================================= */
+
+.paper {
+    --paper-rotation: 0deg;
+
+    position: relative;
+
+    width: min(1100px, 100%);
+    min-height: 460px;
+
+    margin: 0 auto 1.5rem;
+
+    padding: clamp(1.7rem, 4vw, 3.5rem);
+
+    background: var(--paper-light);
+    color: var(--text);
+
+    border: 2px solid var(--ink);
+    box-shadow: 7px 8px 0 var(--ink);
+
+    transform: rotate(var(--paper-rotation));
+}
+
+.paper:nth-of-type(even) {
+    --paper-rotation: .15deg;
+}
+
+.paper:nth-of-type(odd) {
+    --paper-rotation: -.15deg;
+}
+
+.paper > * {
+    position: relative;
+    z-index: 1;
+}
+
+.paper::after {
+    content: "";
+    position: absolute;
+    left: 7%;
+    bottom: 1.3rem;
+
+    width: 22%;
+    height: 2px;
+
+    background: rgba(22, 22, 22, .08);
+}
+
+.paper.cover {
+    --cover-bg: var(--paper-blue);
+    --cover-accent: var(--blue);
+
+    min-height: 570px;
+
+    background: var(--cover-bg);
+    color: var(--ink);
+
+    overflow: hidden;
+
+    transform: rotate(.15deg);
+}
+
+.lesson-instance[data-lesson="0"] .paper.cover {
+    --cover-bg: var(--paper-blue);
+    --cover-accent: var(--blue);
+}
+
+.lesson-instance[data-lesson="1"] .paper.cover {
+    --cover-bg: var(--paper-yellow);
+    --cover-accent: #a66a00;
+}
+
+.lesson-instance[data-lesson="2"] .paper.cover {
+    --cover-bg: var(--paper-red);
+    --cover-accent: var(--red);
+}
+
+.lesson-instance[data-lesson="3"] .paper.cover {
+    --cover-bg: var(--paper-green);
+    --cover-accent: var(--green);
+}
+
+.lesson-instance[data-lesson="4"] .paper.cover {
+    --cover-bg: #efe0f5;
+    --cover-accent: #823b9b;
+}
+
+.paper.cover::before {
+    content: "";
+
+    position: absolute;
+    inset: 14px;
+
+    border: 1px solid rgba(22, 22, 22, .17);
+
+    pointer-events: none;
+}
+
+.cover-ghost {
+    position: absolute;
+
+    right: -.02em;
+    top: -.18em;
+
+    color: var(--cover-accent);
+    opacity: .1;
+
+    font-family: var(--display);
+    font-size: clamp(10rem, 27vw, 19rem);
+    font-weight: 900;
+    line-height: .8;
+    letter-spacing: -.08em;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+.paper.cover .cover-label {
+    display: block;
+
+    margin-bottom: 2.5rem;
+
+    color: var(--cover-accent);
+
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   POLARITY ANNOTATION — TIGHTER PAPERS
+   ========================================================= */
+
+.paper:has(.has-prompt) {
+    min-height: 0;
+
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.paper:has(.has-prompt) + .paper:has(.has-prompt) {
+    margin-top: 2rem;
+}
+
+/* =========================================================
+   CONTENT PAPERS — REMOVE FORCED EMPTY HEIGHT
+   ========================================================= */
+
+.lesson-slide > .paper:not(.cover) {
+    min-height: 0;
+}
+
+.cover-title {
+    margin: 0;
+
+    max-width: 11ch;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: clamp(3.6rem, 9vw, 7rem);
+    font-weight: 900;
+    line-height: .84;
+    letter-spacing: -.07em;
+}
+
+.cover-sub {
+    max-width: 52ch;
+    margin-top: 1.5rem;
+
+    color: rgba(22, 22, 22, .72);
+
+    font-size: .98rem;
+    line-height: 1.65;
+}
+
+.cover-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.5rem;
+
+    margin-top: 1.8rem;
+
+    color: rgba(22, 22, 22, .62);
+
+    font-family: var(--mono);
+    font-size: .64rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.cover-meta span:not(:last-child)::after {
+    content: "·";
+    margin-left: 1.5rem;
+}
+
+.cover-rule {
+    height: 2px;
+    margin: 2rem 0 1.1rem;
+
+    border: 0;
+
+    background:
+        linear-gradient(
+            to right,
+            var(--cover-accent),
+            rgba(22, 22, 22, 0)
+        );
+}
+
+.cover-contents-label {
+    display: block;
+
+    margin-bottom: .75rem;
+
+    color: var(--cover-accent);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .13em;
+}
+
+.cover-contents {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.cover-contents li {
+    border-bottom: 1px solid rgba(22, 22, 22, .15);
+}
+
+.cover-contents button {
+    width: 100%;
+
+    display: flex;
+    align-items: baseline;
+    gap: .9rem;
+
+    padding: .78rem .2rem;
+
+    background: transparent;
+    color: var(--ink);
+
+    border: 0;
+
+    text-align: left;
+    cursor: pointer;
+
+    font-family: var(--body);
+    font-size: .86rem;
+
+    transition:
+        background .15s ease,
+        padding .15s ease,
+        color .15s ease;
+}
+
+.cover-contents button:hover {
+    padding-left: .65rem;
+    background: rgba(255, 255, 255, .22);
+    color: var(--cover-accent);
+}
+
+.cc-num {
+    flex-shrink: 0;
+
+    color: var(--cover-accent);
+
+    font-family: var(--mono);
+    font-size: .7rem;
+}
+
+.cc-title {
+    flex-shrink: 0;
+}
+
+.cc-dots {
+    flex: 1;
+    min-width: 1rem;
+
+    border-bottom: 2px dotted rgba(22, 22, 22, .2);
+
+    transform: translateY(-.25em);
+}
+
+.cc-page {
+    flex-shrink: 0;
+
+    color: rgba(22, 22, 22, .52);
+
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .06em;
+}
+
+@media (max-width: 700px) {
+    .paper.cover {
+        min-height: 0;
+    }
+
+    .cover-title {
+        max-width: 9ch;
+        font-size: clamp(3rem, 14vw, 5rem);
+    }
+
+    .cc-page {
+        display: none;
+    }
+}
+
+/* =========================================================
+   PAPER CONTENT
+   ========================================================= */
+
+.paper-label,
+.lesson-figure-label,
+.lesson-figure-small-label,
+.lesson-figure-large-label,
+.lesson-figure-pair-label,
+.method-label {
+    display: block;
+
+    margin-bottom: .55rem;
+
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .63rem;
+    font-weight: 500;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.paper h3,
+.paper h4 {
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.035em;
+}
+
+.paper h3 {
+    margin: 0 0 1rem;
+    font-size: clamp(1.7rem, 3vw, 2.7rem);
+}
+
+.paper h4 {
+    margin-top: 1.65rem;
+    margin-bottom: .65rem;
+    font-size: clamp(1.15rem, 2vw, 1.55rem);
+}
+
+.paper p,
+.paper li {
+    color: var(--text-soft);
+
+    font-size: .95rem;
+    line-height: 1.7;
+}
+
+.paper p {
+    max-width: 70ch;
+    margin-top: 1rem;
+}
+
+.paper h4 + p {
+    margin-top: 0;
+}
+
+.paper ul,
+.paper ol {
+    max-width: 70ch;
+
+    margin: 1rem 0 0;
+    padding-left: 1.4rem;
+}
+
+.paper li + li {
+    margin-top: .45rem;
+}
+
+.paper b,
+.paper strong {
+    color: var(--ink);
+    font-weight: 750;
+}
+
+.paper a {
+    color: var(--blue);
+}
+
+.paper hr {
+    height: 2px;
+    margin: 1.75rem 0;
+
+    border: 0;
+
+    background:
+        linear-gradient(
+            to right,
+            rgba(22, 22, 22, .25),
+            transparent
+        );
+}
+
+/* =========================================================
+   COMMON INSET / FIGURE MODULES
+   ========================================================= */
+
+.lesson-figure,
+.lesson-figure-small,
+.lesson-figure-large,
+.lesson-figure-pair,
+.method,
+.ve-quiz,
+.lewis-draw,
+.shape-pick,
+.wq-figure,
+.table-q,
+.mq-step,
+.equation,
+.polar-q-image {
+    border: 1px solid rgba(22, 22, 22, .22);
+    background: rgba(255, 255, 255, .45);
+}
+
+.lesson-figure,
+.lesson-figure-small,
+.lesson-figure-large,
+.lesson-figure-pair,
+.method,
+.ve-quiz,
+.lewis-draw,
+.shape-pick,
+.wq-figure,
+.table-q,
+.mq-step {
+    margin-top: 1.75rem;
+    padding: 1.25rem;
+    box-shadow: 4px 4px 0 rgba(22, 22, 22, .10);
+}
+
+.lesson-figure-text h4,
+.lesson-figure-small-text h4,
+.lesson-figure-large-text h4,
+.lesson-figure-pair-text h4,
+.method-text h4 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+}
+
+.lesson-figure-text p,
+.lesson-figure-small-text p,
+.lesson-figure-large-text p,
+.lesson-figure-pair-text p,
+.method-text p {
+    margin-top: .5rem;
+    font-size: .88rem;
+    line-height: 1.6;
+}
+
+.lesson-figure-image,
+.lesson-figure-small-image,
+.lesson-figure-large-image,
+.method-image,
+.lesson-figure-pair-image,
+.wq-figure-image {
+    overflow: hidden;
+
+    border: 1px solid rgba(22, 22, 22, .18);
+    background: var(--paper-light);
+    box-shadow: 4px 4px 0 rgba(22, 22, 22, .12);
+}
+
+.lesson-figure-image img,
+.lesson-figure-small-image img,
+.lesson-figure-large-image img,
+.method-image img,
+.lesson-figure-pair-image img,
+.wq-figure-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.lesson-figure {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: 1.25rem;
+    align-items: center;
+}
+
+.lesson-figure-small {
+    display: grid;
+    grid-template-columns: minmax(0, .75fr) minmax(180px, .45fr);
+    gap: 1.25rem;
+    align-items: center;
+}
+
+.lesson-figure-large {
+    display: grid;
+    grid-template-columns: minmax(0, .55fr) minmax(0, 1.45fr);
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.lesson-figure-pair {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.lesson-figure-pair-images {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.lesson-figure-pair-images.equal .lesson-figure-pair-image {
+    aspect-ratio: 1 / 1;
+    background: var(--ink);
+}
+
+.lesson-figure-pair-images.equal .lesson-figure-pair-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.lesson-figure-pair-caption {
+    margin-top: .5rem;
+
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.method {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.method-image {
+    width: 100%;
+    max-width: 900px;
+}
+
+@media (max-width: 800px) {
+    .lesson-figure,
+    .lesson-figure-small,
+    .lesson-figure-large {
+        grid-template-columns: 1fr;
+    }
+
+    .lesson-figure-pair-images {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   LEWIS STRUCTURE DRAWING
+   ========================================================= */
+
+.lewis-draw-header h4 {
+    margin: 0;
+}
+
+.lewis-draw-header p {
+    margin-top: .45rem;
+}
+
+.lewis-draw-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .65rem 1rem;
+
+    margin-top: 1.1rem;
+    padding-bottom: .9rem;
+
+    border-bottom: 1px solid var(--soft-rule);
+}
+
+.lewis-draw-group {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+}
+
+.lewis-draw-actions {
+    margin-left: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+/* =========================================================
+   LEWIS DRAW — COLOUR SWATCHES
+   ========================================================= */
+
+.lewis-color {
+    width: 26px;
+    height: 26px;
+
+    flex-shrink: 0;
+
+    min-width: 26px;
+    padding: 0;
+
+    border: 2px solid transparent;
+    border-radius: 50%;
+
+    background: #1a1714;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    transition:
+        transform .15s ease,
+        border-color .15s ease;
+}
+
+
+/* Black — general */
+
+.lewis-color[data-color="#1a1714"] {
+    background: #1a1714;
+}
+
+
+/* Blue — atoms */
+
+.lewis-color[data-color="#0751c8"] {
+    background: #0751c8;
+}
+
+
+/* Orange — bonds */
+
+.lewis-color[data-color="#c8380c"] {
+    background: #c8380c;
+}
+
+
+/* Green — lone pairs */
+
+.lewis-color[data-color="#1c8a3c"] {
+    background: #1c8a3c;
+}
+
+
+/* Selected colour */
+
+.lewis-color.active {
+    border-color: #756c58;
+
+    transform: scale(1.15);
+}
+
+.lewis-size,
+.lewis-undo,
+.lewis-clear,
+.lewis-reveal {
+    padding: .5rem .75rem;
+
+    background: var(--paper-light);
+    color: var(--ink);
+
+    border: 1px solid rgba(22, 22, 22, .25);
+
+    cursor: pointer;
+
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .02em;
+
+    transition:
+        background .15s ease,
+        color .15s ease,
+        transform .15s ease;
+}
+
+.lewis-size.active {
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+}
+
+.lewis-undo:hover,
+.lewis-clear:hover,
+.lewis-reveal:hover,
+.lewis-size:hover {
+    background: var(--yellow);
+}
+
+/* =========================================================
+   LEWIS DRAWING — ANSWER REPLACES CANVAS
+   ========================================================= */
+
+.lewis-draw-canvas-wrap {
+    position: relative;
+
+    margin-top: 1.1rem;
+
+    border: 1px solid rgba(22, 22, 22, .22);
+
+    box-shadow:
+        4px 4px 0 rgba(22, 22, 22, .12);
+
+    background: var(--paper-light);
+
+    overflow: hidden;
+}
+
+
+/* Student drawing */
+
+.lewis-draw-canvas {
+    display: block;
+
+    width: 100%;
+    height: 380px;
+
+    background: var(--paper-light);
+
+    cursor: crosshair;
+    touch-action: none;
+}
+
+/* =========================================================
+   POLARITY ANNOTATION — IMAGE + DRAWING OVERLAY
+   ========================================================= */
+
+.lewis-draw-canvas-wrap.has-prompt {
+    position: relative;
+
+    width: 100%;
+    height: 200px;
+
+    background: #fffdf5;
+
+    overflow: hidden;
+}
+
+
+/* The bond image sits underneath the drawing canvas. */
+
+.lewis-draw-prompt {
+    position: absolute;
+
+    inset: 0;
+
+    width: auto;
+    height: auto;
+
+    max-width: 40%;
+    max-height: 50%;
+
+    margin: auto;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* The canvas is transparent and sits directly over
+   the bond image. */
+
+.lewis-draw-canvas-wrap.has-prompt .lewis-draw-canvas {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: transparent;
+
+    border: 0;
+
+    z-index: 1;
+
+    pointer-events: auto;
+}
+
+
+/* Answer occupies the same position as the prompt. */
+
+.lewis-draw-canvas-wrap.has-prompt .lewis-draw-answer {
+    position: absolute;
+
+    inset: 0;
+
+    width: auto;
+    height: auto;
+
+    max-width: 40%;
+    max-height: 50%;
+
+    margin: auto;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+/* Hide the drawing and original prompt when the answer
+   is being shown. */
+
+.lewis-draw-canvas-wrap.has-prompt:has(.lewis-draw-answer.visible)
+.lewis-draw-canvas,
+
+.lewis-draw-canvas-wrap.has-prompt:has(.lewis-draw-answer.visible)
+.lewis-draw-prompt {
+    visibility: hidden;
+}
+
+
+/* Correct answer */
+
+.lewis-draw-answer {
+    display: none;
+
+    width: 100%;
+    height: 380px;
+
+    object-fit: contain;
+
+    background: var(--paper-light);
+
+    pointer-events: none;
+}
+
+
+/* When answer is active, hide the canvas */
+
+.lewis-draw-canvas-wrap.answer-visible
+.lewis-draw-canvas {
+    display: none;
+}
+
+
+/* And show the answer in its place */
+
+.lewis-draw-canvas-wrap.answer-visible
+.lewis-draw-answer {
+    display: block;
+}
+
+@media (max-width: 600px) {
+
+    .lewis-draw-canvas,
+    .lewis-draw-answer {
+        height: 300px;
+    }
+
+}
+/* =========================================================
+   VALENCE / ELECTRONEGATIVITY QUIZZES
+   ========================================================= */
+
+.ve-quiz-header h4 {
+    margin: 0;
+}
+
+.ve-quiz-header p {
+    margin-top: .4rem;
+}
+
+.ve-quiz-list {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 1rem;
+
+    border-top: 1px solid var(--soft-rule);
+}
+
+.ve-quiz-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 92px 28px;
+    align-items: center;
+    gap: 1rem;
+
+    padding: .75rem 0;
+
+    border-bottom: 1px solid var(--soft-rule);
+}
+
+.ve-quiz-element {
+    font-size: .9rem;
+}
+
+.ve-quiz-input,
+.calc-q-input,
+.bq-input,
+.bq-select,
+.mq-input,
+.tq-input,
+.wq-input {
+    width: 100%;
+
+    padding: .58rem .7rem;
+
+    background: var(--paper-light);
+    color: var(--ink);
+
+    border: 1px solid rgba(22, 22, 22, .25);
+
+    box-shadow: inset 0 1px 2px rgba(22, 22, 22, .05);
+}
+
+.ve-quiz-input {
+    text-align: center;
+}
+
+.ve-quiz-input:focus,
+.calc-q-input:focus,
+.bq-input:focus,
+.bq-select:focus,
+.mq-input:focus,
+.tq-input:focus,
+.wq-input:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px rgba(23, 87, 255, .12);
+}
+
+.ve-quiz-result {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.ve-quiz-row.correct {
+    background: rgba(28, 138, 60, .06);
+}
+
+.ve-quiz-row.incorrect {
+    background: rgba(200, 56, 12, .06);
+}
+
+.ve-quiz-row.correct .ve-quiz-result::after {
+    content: "✓";
+    color: var(--green);
+}
+
+.ve-quiz-row.incorrect .ve-quiz-result::after {
+    content: "✕";
+    color: #c8380c;
+}
+
+.ve-quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem;
+
+    margin-top: 1rem;
+}
+
+.ve-quiz-mark,
+.ve-quiz-reset,
+.shape-check,
+.shape-reset,
+.wq-submit,
+.wq-clear,
+.calc-q-check,
+.calc-q-reset,
+.mq-btn,
+.tq-check,
+.tq-reset {
+    padding: .62rem 1rem;
+
+    border: 2px solid var(--ink);
+
+    cursor: pointer;
+
+    font-family: var(--mono);
+    font-size: .66rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
+}
+
+.ve-quiz-mark,
+.shape-check,
+.wq-submit,
+.calc-q-check,
+.mq-btn,
+.tq-check {
+    background: var(--ink);
+    color: white;
+
+    box-shadow: 3px 3px 0 var(--blue);
+}
+
+.ve-quiz-reset,
+.shape-reset,
+.wq-clear,
+.calc-q-reset,
+.mq-btn.ghost,
+.tq-reset {
+    background: var(--paper-light);
+    color: var(--ink);
+
+    box-shadow: 3px 3px 0 rgba(22, 22, 22, .16);
+}
+
+.ve-quiz-mark:hover,
+.ve-quiz-reset:hover,
+.shape-check:hover,
+.shape-reset:hover,
+.wq-submit:hover,
+.wq-clear:hover,
+.calc-q-check:hover,
+.calc-q-reset:hover,
+.mq-btn:hover,
+.tq-check:hover,
+.tq-reset:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--ink);
+}
+
+.ve-quiz-score,
+.bq-score,
+.tq-score {
+    margin-left: auto;
+
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .68rem;
+}
+
+/* =========================================================
+   SHAPE / ANGLE PICKERS
+   ========================================================= */
+
+.shape-pick-header h4 {
+    margin: 0;
+}
+
+.shape-pick-group {
+    margin-top: 1rem;
+}
+
+.shape-pick-legend {
+    display: block;
+
+    margin-bottom: .55rem;
+
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .64rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.written-q .shape-pick-legend,
+.polar-q .shape-pick-legend {
+    font-size: .82rem;
+    letter-spacing: .015em;
+    text-transform: none;
+}
+
+.shape-pick-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.shape-option {
+    align-self: auto;
+
+    padding: .55rem .8rem;
+
+    background: var(--paper-light);
+    color: var(--ink);
+
+    border: 1px solid rgba(22, 22, 22, .28);
+
+    cursor: pointer;
+
+    font-family: var(--body);
+    font-size: .82rem;
+    font-weight: 600;
+
+    transition:
+        background .15s ease,
+        color .15s ease,
+        transform .15s ease;
+}
+
+.shape-option:hover {
+    background: var(--yellow);
+    transform: translateY(-1px);
+}
+
+.shape-option.selected {
+    background: var(--blue);
+    color: white;
+    border-color: var(--ink);
+}
+
+.shape-option.correct {
+    background: rgba(28, 138, 60, .12);
+    color: var(--green);
+    border-color: var(--green);
+}
+
+.shape-option.incorrect {
+    background: rgba(200, 56, 12, .10);
+    color: #c8380c;
+    border-color: #c8380c;
+}
+
+.shape-pick.checked .shape-option {
+    pointer-events: none;
+}
+
+.shape-pick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem;
+
+    margin-top: 1rem;
+}
+
+.shape-pick-result {
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .68rem;
+}
+
+.shape-pick-result.all-correct {
+    color: var(--green);
+}
+
+/* =========================================================
+   WRITTEN QUESTIONS
+   ========================================================= */
+
+.wq-header h4 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 1.15rem;
+}
+
+.wq-header p {
+    margin-top: .45rem;
+}
+
+.wq-figure {
+    margin-top: 1.15rem;
+}
+
+.wq-figure-image {
+    max-width: 100%;
+}
+
+.wq-figure figcaption {
+    margin-top: .75rem;
+
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.wq-answer-label {
+    display: block;
+
+    margin-top: 1.25rem;
+    margin-bottom: .5rem;
+
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .64rem;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.wq-input {
+    display: block;
+
+    min-height: 190px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+.wq-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .7rem;
+
+    margin-top: .8rem;
+}
+
+.wq-wordcount {
+    margin-left: auto;
+
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+}
+
+.wq-message {
+    min-height: 1.2em;
+    margin-top: .65rem;
+
+    color: #c8380c;
+    font-size: .82rem;
+}
+
+.wq-feedback {
+    margin-top: 1.25rem;
+    padding: 0;
+
+    background: var(--paper-light);
+
+    border: 1px solid rgba(22, 22, 22, .25);
+    box-shadow: 4px 4px 0 rgba(22, 22, 22, .12);
+}
+
+.wq-feedback[hidden] {
+    display: none;
+}
+
+.wq-feedback > summary {
+    padding: .9rem 1rem;
+
+    color: var(--ink);
+
+    font-family: var(--mono);
+    font-size: .68rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+
+    cursor: pointer;
+}
+
+.wq-feedback > summary::after {
+    content: "+";
+
+    float: right;
+
+    color: var(--blue);
+
+    font-size: 1rem;
+
+    transition: transform .2s ease;
+}
+
+.wq-feedback[open] > summary::after {
+    transform: rotate(45deg);
+}
+
+.wq-feedback[open] > summary {
+    border-bottom: 1px solid rgba(22, 22, 22, .14);
+}
+
+.wq-feedback-body {
+    padding: 1rem;
+}
+
+.wq-block {
+    margin-top: 1.4rem;
+}
+
+.wq-block:first-child {
+    margin-top: 0;
+}
+
+.wq-block h5 {
+    margin: 0 0 .55rem;
+
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .64rem;
+    font-weight: 500;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.wq-standard {
+    max-width: none;
+
+    margin-top: 0;
+
+    font-size: .86rem;
+    line-height: 1.6;
+}
+
+.wq-level {
+    --criteria: #756c58;
+
+    margin-top: .85rem;
+    padding: .9rem 1rem;
+
+    border-left: 4px solid var(--criteria);
+    background: rgba(80, 70, 55, .04);
+}
+
+.wq-level[data-level="merit"] {
+    --criteria: var(--blue);
+}
+
+.wq-level[data-level="excellence"] {
+    --criteria: var(--green);
+}
+
+.wq-level-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.wq-level-head h6 {
+    margin: 0;
+
+    color: var(--criteria);
+
+    font-family: var(--display);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.wq-level-score {
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+}
+
+.wq-level-desc {
+    margin-top: .35rem;
+
+    font-size: .84rem;
+    line-height: 1.5;
+}
+
+.wq-checklist {
+    max-width: none;
+
+    margin: .7rem 0 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.wq-checklist li {
+    display: grid;
+    grid-template-columns: 1.4rem minmax(0, 1fr);
+
+    gap: .5rem;
+
+    padding: .5rem 0;
+
+    border-top: 1px solid rgba(22, 22, 22, .10);
+
+    color: var(--text-soft);
+
+    font-size: .84rem;
+    line-height: 1.5;
+}
+
+.wq-tick {
+    color: var(--muted);
+    font-weight: 800;
+    text-align: center;
+}
+
+.wq-checklist li.found {
+    color: var(--ink);
+}
+
+.wq-checklist li.found .wq-tick {
+    color: var(--green);
+}
+
+.wq-checklist li.missing .wq-tick {
+    color: #c8380c;
+}
+
+.wq-note {
+    margin-top: 1rem;
+
+    color: var(--muted);
+
+    font-size: .78rem;
+    line-height: 1.5;
+}
+
+.wq-exemplar {
+    padding: .95rem 1rem;
+
+    border-left: 4px solid var(--green);
+    background: rgba(28, 138, 60, .055);
+}
+
+.wq-exemplar p {
+    margin-top: .7rem;
+}
+
+.wq-exemplar p:first-child {
+    margin-top: 0;
+}
+
+.wq-gauge {
+    padding: .9rem 1rem;
+
+    background: rgba(80, 70, 55, .04);
+    border: 1px solid rgba(22, 22, 22, .12);
+}
+
+.wq-gauge-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+
+    color: var(--muted);
+
+    font-size: .82rem;
+}
+
+.wq-keyword-score {
+    color: var(--ink);
+
+    font-family: var(--mono);
+    font-size: .7rem;
+}
+
+.wq-gauge-bar {
+    height: 7px;
+    margin-top: .7rem;
+
+    overflow: hidden;
+
+    background: rgba(22, 22, 22, .10);
+}
+
+.wq-gauge-fill {
+    width: 0;
+    height: 100%;
+
+    background: var(--blue);
+
+    transition: width .3s ease;
+}
+
+.wq-kw-group {
+    margin-top: 1.2rem;
+}
+
+.wq-kw-group h6 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: .95rem;
+    font-weight: 700;
+}
+
+/* =========================================================
+   CALCULATION QUESTIONS
+   ========================================================= */
+
+.calc-q > hr {
+    height: 2px;
+    margin: 1rem 0;
+
+    border: 0;
+
+    background:
+        linear-gradient(
+            to right,
+            rgba(22, 22, 22, .24),
+            transparent
+        );
+}
+
+.calc-q h4 {
+    margin-top: .5rem;
+    margin-bottom: 0;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: 1.15rem;
+}
+
+.calc-q-answer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .7rem;
+
+    margin-top: 1rem;
+
+    color: var(--ink);
+}
+
+.calc-q-input {
+    width: 150px;
+}
+
+.calc-q-unit {
+    color: var(--muted);
+}
+
+.calc-q-result {
+    min-height: 1.2em;
+    margin-top: .75rem;
+
+    font-family: var(--mono);
+    font-size: .68rem;
+}
+
+.calc-q-result.correct {
+    color: var(--green);
+}
+
+.calc-q-result.incorrect {
+    color: #c8380c;
+}
+
+.calc-q-working {
+    margin-top: 1rem;
+}
+
+
+/* Small support text used by calculation / mode questions */
+.calc-q-lhs {
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: .72rem;
+}
+
+.mq-note {
+    margin-top: .8rem;
+    color: var(--muted);
+    font-size: .78rem;
+    line-height: 1.5;
+}
+
+.mq-feedback {
+    margin-top: 1.1rem;
+}
+
+/* =========================================================
+   MODE QUESTION — EXAM / GUIDED
+   ========================================================= */
+
+.mode-q {
+    margin-top: 1rem;
+}
+
+.mode-q [hidden] {
+    display: none !important;
+}
+
+.mq-tabs {
+    display: flex;
+    gap: 0;
+
+    margin-top: 1.25rem;
+
+    border-bottom: 2px solid var(--ink);
+}
+
+.mq-tab {
+    margin: 0;
+    padding: .65rem .9rem;
+
+    background: transparent;
+    color: var(--muted);
+
+    border: 0;
+    border-bottom: 3px solid transparent;
+
+    cursor: pointer;
+
+    font-family: var(--mono);
+    font-size: .66rem;
+    font-weight: 500;
+    letter-spacing: .03em;
+}
+
+.mq-tab:hover {
+    background: var(--yellow);
+}
+
+.mq-tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--blue);
+}
+
+.mq-panel {
+    padding-top: .75rem;
+}
+
+.mq-symbols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+
+    margin-top: .75rem;
+}
+
+.mq-sym {
+    min-width: 2.15rem;
+
+    padding: .4rem .55rem;
+
+    background: var(--paper-light);
+    color: var(--ink);
+
+    border: 1px solid rgba(22, 22, 22, .25);
+
+    cursor: pointer;
+
+    font-family: var(--mono);
+    font-size: .7rem;
+}
+
+.mq-sym:hover {
+    background: var(--yellow);
+}
+
+.mq-working {
+    display: block;
+
+    width: 100%;
+    min-height: 240px;
+
+    margin-top: 1rem;
+
+    padding: .65rem 1rem;
+
+    resize: vertical;
+
+    color: var(--text);
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            var(--paper-light) 0,
+            var(--paper-light) calc(1.95rem - 1px),
+            rgba(22, 22, 22, .09) calc(1.95rem - 1px),
+            rgba(22, 22, 22, .09) 1.95rem
+        );
+
+    border: 1px solid rgba(22, 22, 22, .25);
+
+    line-height: 1.95rem;
+}
+
+.mq-answer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .55rem;
+
+    margin-top: 1rem;
+}
+
+.mq-input {
+    width: 130px;
+}
+
+.mq-input.mq-final-unit {
+    width: 90px;
+}
+
+select.mq-input {
+    width: 170px;
+}
+
+.mq-unit {
+    color: var(--muted);
+}
+
+.mq-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem;
+
+    margin-top: 1rem;
+}
+
+.mq-link {
+    align-self: auto;
+    padding: 0;
+
+    background: none;
+    color: var(--blue);
+
+    border: 0;
+
+    cursor: pointer;
+
+    font-size: .8rem;
+    text-decoration: underline;
+}
+
+.mq-msg {
+    min-height: 1.2em;
+    margin-top: .55rem;
+
+    font-family: var(--mono);
+    font-size: .68rem;
+}
+
+.mq-msg.ok {
+    color: var(--green);
+}
+
+.mq-msg.bad {
+    color: #c8380c;
+}
+
+.mq-guided-done {
+    color: var(--green);
+
+    font-family: var(--mono);
+    font-size: .68rem;
+}
+
+.mq-roadmap {
+    display: flex;
+    gap: .7rem;
+
+    max-width: none;
+
+    margin: 1.15rem 0 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.mq-roadmap li {
+    flex: 1;
+
+    padding-top: .55rem;
+
+    color: var(--muted);
+
+    border-top: 3px solid rgba(22, 22, 22, .15);
+
+    font-size: .72rem;
+}
+
+.mq-roadmap li strong {
+    display: block;
+
+    color: inherit;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.mq-roadmap li.active {
+    color: var(--ink);
+    border-top-color: var(--blue);
+}
+
+.mq-roadmap li.done {
+    color: var(--green);
+    border-top-color: var(--green);
+}
+
+.mq-step {
+    margin-top: 1rem;
+    padding: 1rem;
+
+    transition: opacity .2s ease;
+}
+
+.mq-step.locked {
+    opacity: .43;
+}
+
+.mq-step.done {
+    border-color: var(--green);
+    background: rgba(28, 138, 60, .05);
+}
+
+.mq-step h5 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.mq-step p {
+    margin-top: .45rem;
+}
+
+.mq-step-working {
+    margin-top: .85rem;
+}
+
+.mq-formula,
+.mq-step .mq-formula {
+    margin-top: .9rem;
+    padding: .75rem 1rem;
+
+    background: rgba(23, 87, 255, .05);
+
+    border-left: 4px solid var(--blue);
+
+    font-family: var(--mono);
+    font-size: 1rem;
+}
+
+/* =========================================================
+   TABLE QUESTIONS
+   ========================================================= */
+
+.table-q {
+    margin-top: 1.5rem;
+}
+
+.tq-scroll {
+    margin-top: 1rem;
+
+    overflow-x: auto;
+    padding-bottom: .4rem;
+}
+
+.tq-table,
+.bond-table {
+    width: 100%;
+    min-width: 620px;
+
+    border-collapse: collapse;
+
+    background: var(--paper-light);
+
+    border: 1px solid rgba(22, 22, 22, .25);
+    box-shadow: 4px 4px 0 rgba(22, 22, 22, .10);
+
+    color: var(--text);
+
+    font-size: .85rem;
+}
+
+.tq-table th,
+.tq-table td,
+.bond-table th,
+.bond-table td {
+    padding: .65rem .75rem;
+
+    vertical-align: top;
+
+    border-right: 1px solid rgba(22, 22, 22, .12);
+    border-bottom: 1px solid rgba(22, 22, 22, .12);
+}
+
+.tq-table th:last-child,
+.tq-table td:last-child,
+.bond-table th:last-child,
+.bond-table td:last-child {
+    border-right: 0;
+}
+
+.tq-table th,
+.bond-table th {
+    color: var(--muted);
+    background: rgba(80, 70, 55, .05);
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.tq-table th {
+    text-align: center;
+}
+
+.tq-table td {
+    min-width: 0;
+}
+
+.tq-solid {
+    padding: 1rem;
+
+    text-align: left;
+    vertical-align: middle;
+
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.tq-input {
+    min-height: 88px;
+    resize: vertical;
+}
+
+.tq-cell.correct {
+    background: rgba(28, 138, 60, .07);
+}
+
+.tq-cell.incorrect {
+    background: rgba(200, 56, 12, .07);
+}
+
+.tq-msg {
+    min-height: 1.2em;
+    margin-top: .4rem;
+
+    color: var(--muted);
+
+    font-size: .7rem;
+}
+
+.tq-cell.correct .tq-msg {
+    color: var(--green);
+}
+
+.tq-cell.incorrect .tq-msg {
+    color: #c8380c;
+}
+
+/* Bond table columns */
+.bond-table th:nth-child(1),
+.bond-table td:nth-child(1) {
+    width: 25%;
+    text-align: left;
+}
+
+.bond-table th:nth-child(2),
+.bond-table td:nth-child(2) {
+    width: 20%;
+}
+
+.bond-table th:nth-child(3),
+.bond-table td:nth-child(3) {
+    width: 27.5%;
+}
+
+.bond-table th:nth-child(4),
+.bond-table td:nth-child(4) {
+    width: 27.5%;
+}
+
+.bond-table .bond-total td {
+    background: rgba(80, 70, 55, .06);
+    border-top: 2px solid rgba(22, 22, 22, .24);
+    border-bottom: 0;
+    font-weight: 700;
+}
+
+/* =========================================================
+   MELTING / BOILING TABLE
+   ========================================================= */
+
+.mp-table {
+    margin-top: 1rem;
+}
+
+.mp-head,
+.mp-row > summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 8rem 1rem;
+    gap: .75rem;
+
+    align-items: center;
+}
+
+.mp-head {
+    padding: 0 .8rem .55rem;
+
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.mp-list {
+    background: var(--paper-light);
+
+    border: 1px solid rgba(22, 22, 22, .25);
+    box-shadow: 4px 4px 0 rgba(22, 22, 22, .10);
+}
+
+.mp-row {
+    padding: 0;
+
+    border-bottom: 1px solid rgba(22, 22, 22, .12);
+}
+
+.mp-row:last-child {
+    border-bottom: 0;
+}
+
+.mp-row > summary {
+    padding: .85rem .8rem;
+
+    color: var(--ink);
+
+    cursor: pointer;
+
+    transition: background .15s ease;
+}
+
+.mp-row > summary::-webkit-details-marker {
+    display: none;
+}
+
+.mp-row > summary::after {
+    content: "+";
+    color: var(--blue);
+
+    text-align: center;
+}
+
+.mp-row[open] > summary::after {
+    content: "×";
+}
+
+.mp-row > summary:hover {
+    background: var(--yellow);
+}
+
+.mp-row[open] > summary {
+    background: rgba(23, 87, 255, .05);
+    border-bottom: 1px solid rgba(22, 22, 22, .12);
+}
+
+.mp-name strong {
+    display: block;
+
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.mp-name small {
+    display: block;
+
+    margin-top: .1rem;
+
+    color: var(--muted);
+    font-size: .76rem;
+}
+
+.mp-badge {
+    justify-self: start;
+
+    padding: .18rem .55rem;
+
+    border: 1px solid var(--ink);
+
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.mp-badge.high {
+    background: var(--ink);
+    color: white;
+}
+
+.mp-badge.low {
+    background: transparent;
+    color: var(--ink);
+}
+
+.mp-explain {
+    padding: .9rem .8rem 1rem;
+}
+
+.mp-explain .wq-exemplar {
+    margin: 0;
+}
+
+/* =========================================================
+   EQUATIONS
+   ========================================================= */
+
+.equation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+
+    padding: 1rem;
+
+    font-family: var(--body);
+    font-size: 1.55rem;
+}
+
+.eq-op {
+    color: var(--muted);
+}
+
+.eq-frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.eq-frac > .eq-var:first-child {
+    padding: 0 .45rem .12rem;
+    border-bottom: 2px solid var(--ink);
+}
+
+.eq-frac > .eq-var:last-child {
+    padding: .12rem .45rem 0;
+}
+
+.eq-var {
+    position: relative;
+
+    padding: 0 .22rem;
+
+    border-radius: 2px;
+
+    background: rgba(117, 108, 88, .08);
+
+    cursor: help;
+
+    transition:
+        background .15s ease,
+        color .15s ease;
+}
+
+.eq-var:hover,
+.eq-var:focus-visible {
+    background: rgba(23, 87, 255, .11);
+    color: var(--blue);
+    outline: 0;
+}
+
+.eq-var::after {
+    content: attr(data-name) " · " attr(data-unit);
+
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + .45rem);
+    z-index: 20;
+
+    transform: translateX(-50%) translateY(4px);
+
+    padding: .35rem .55rem;
+
+    background: var(--ink);
+    color: white;
+
+    border: 1px solid white;
+    box-shadow: 3px 3px 0 rgba(22, 22, 22, .20);
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    line-height: 1.3;
+    white-space: nowrap;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+        opacity .15s ease,
+        transform .15s ease;
+}
+
+.eq-var:hover::after,
+.eq-var:focus::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dipole {
+    display: inline-block;
+
+    width: 2.5em;
+    height: 1em;
+
+    vertical-align: middle;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* =========================================================
+   POLARITY QUESTION
+   ========================================================= */
+
+.polar-q {
+    display: grid;
+    grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr);
+    gap: 1.5rem;
+    align-items: start;
+
+    margin-top: 1.25rem;
+}
+
+.polar-q-image {
+    aspect-ratio: 1 / 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: var(--paper-light);
+}
+
+.polar-q-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    object-fit: contain;
+
+    mix-blend-mode: multiply;
+}
+
+.polar-q .shape-pick {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+    box-shadow: none;
+    background: transparent;
+}
+
+@media (max-width: 760px) {
+    .polar-q {
+        grid-template-columns: 1fr;
+    }
+
+    .polar-q-image {
+        max-width: 340px;
+        margin-inline: auto;
+    }
+}
+
+/* =========================================================
+   GENERAL LESSON MARKS / STATES
+   ========================================================= */
+
+blue,
+orange,
+green {
+    font-weight: 700;
+}
+
+.lesson-figure-text blue,
+.lesson-figure-small-text blue,
+.lesson-figure-large-text blue,
+.lesson-figure-pair-text blue {
+    color: var(--blue);
+}
+
+.lesson-figure-text orange,
+.lesson-figure-small-text orange,
+.lesson-figure-large-text orange,
+.lesson-figure-pair-text orange {
+    color: #d97706;
+}
+
+.lesson-figure-text green,
+.lesson-figure-small-text green,
+.lesson-figure-large-text green,
+.lesson-figure-pair-text green {
+    color: var(--green);
+}
+
+.wide {
+    width: 100%;
+}
+
+.equal {
+    align-items: start;
+}
+
+.ghost {
+    background: transparent;
+    color: var(--muted);
+    border-color: rgba(22, 22, 22, .18);
+}
+
+.some {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: .64rem;
+}
+
+.yes {
+    color: var(--green);
+}
+
+.no {
+    color: #c8380c;
+}
+
+.high {
+    color: var(--ink);
+}
+
+.low {
+    color: var(--muted);
+}
+
+.numbering {
+    color: var(--blue);
+}
+
+.lesson-page .locked {
+    opacity: .45;
+}
+
+.lesson-page .done {
+    color: var(--green);
+}
+
+.lesson-page details {
+    border: 0;
+}
+
+.lesson-page summary {
+    list-style: none;
+}
+
+.lesson-page summary::-webkit-details-marker {
+    display: none;
+}
+
+/* =========================================================
+   READER CONTROLS
+   ========================================================= */
+
+.lesson-controls {
+    flex: 0 0 auto;
+
+    height: 62px;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+
+    gap: 1rem;
+
+    padding:
+        .5rem
+        clamp(1rem, 4vw, 3rem);
+
+    background: var(--paper);
+
+    border-top: 2px solid var(--ink);
+}
+
+.lesson-control {
+    min-width: 138px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+
+    padding: .55rem .75rem;
+
+    background: var(--paper-light);
+    color: var(--ink);
+
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+
+    cursor: pointer;
+
+    font-family: var(--mono);
+    font-size: .67rem;
+    font-weight: 500;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
+}
+
+.lesson-control:hover:not(:disabled) {
+    background: var(--yellow);
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--ink);
+}
+
+.lesson-control.previous {
+    justify-self: start;
+}
+
+.lesson-control.next {
+    justify-self: end;
+    justify-content: flex-end;
+}
+
+.lesson-control:disabled {
+    opacity: .3;
+    cursor: not-allowed;
+}
+
+.control-arrow {
+    font-size: 1rem;
+}
+
+.lesson-part-indicator {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+}
+
+.lesson-part-indicator #currentPart {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+@media (max-width: 700px) {
+    .lesson-topbar {
+        min-height: 58px;
+        padding-inline: .75rem;
+    }
+
+    .lesson-location {
+        gap: .45rem;
+        font-size: .6rem;
+    }
+
+    .lesson-part-divider,
+    #partTitle {
+        display: none;
+    }
+
+    .lesson-position {
+        min-width: 68px;
+        padding-inline: .45rem;
+    }
+
+    .lesson-slide {
+        padding:
+            calc(58px + 1.25rem)
+            .75rem
+            2rem;
+    }
+
+    .paper {
+        min-height: 0;
+        padding: 1.4rem 1rem 1.7rem;
+        transform: none;
+    }
+
+    .lesson-controls {
+        height: 68px;
+        padding-inline: .7rem;
+    }
+
+    .lesson-control {
+        min-width: 48px;
+        width: 48px;
+        height: 42px;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .lesson-control span:not(.control-arrow) {
+        display: none;
+    }
+
+    .lesson-part-indicator {
+        font-size: .6rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .standard-overview {
+        width: calc(100% - 1rem);
+    }
+
+    .overview-note {
+        padding: 1.15rem;
+    }
+
+    .lesson-card {
+        grid-template-columns: 46px minmax(0, 1fr) auto;
+    }
+
+    .lesson-card-number {
+        width: 42px;
+        height: 42px;
+    }
+
+    .lesson-card-arrow {
+        font-size: 1.2rem;
+    }
+
+    .lesson-figure,
+    .lesson-figure-small,
+    .lesson-figure-large,
+    .lesson-figure-pair,
+    .method,
+    .ve-quiz,
+    .lewis-draw,
+    .shape-pick,
+    .wq-figure,
+    .table-q,
+    .mq-step {
+        padding: 1rem;
+    }
+
+    .ve-quiz-row {
+        grid-template-columns: minmax(0, 1fr) 70px 24px;
+        gap: .5rem;
+    }
+
+    .mp-head,
+    .mp-row > summary {
+        grid-template-columns: minmax(0, 1fr) 5.5rem 1rem;
+        gap: .5rem;
+    }
+
+    .mp-head {
+        padding-inline: .55rem;
+    }
+
+    .mp-row > summary {
+        padding-inline: .55rem;
+    }
+
+    .paper.cover {
+        min-height: 0;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .home .hero-line,
+    html.js body.home .pop {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .lesson-card,
+    .lesson-control,
+    .shape-option,
+    .back-to-standard,
+    .eq-var::after {
+        transition: none;
+    }
+}
+
+/* =========================================================
+   LEWIS STRUCTURES — LESSON REFINEMENT
+   Add after the existing lesson styles
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. BETTER READING WIDTH
+   Keeps explanations comfortable to read.
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .paper > p,
+.lesson-instance[data-lesson="0"] .paper > ul,
+.lesson-instance[data-lesson="0"] .paper > ol {
+    max-width: 68ch;
+}
+
+
+/* ---------------------------------------------------------
+   2. STRONGER SECTION HEADINGS
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .paper h3 {
+    margin-top: .25rem;
+    margin-bottom: 1.1rem;
+}
+
+.lesson-instance[data-lesson="0"] .paper h4 {
+    line-height: 1.15;
+}
+
+
+/* ---------------------------------------------------------
+   3. METHOD CARDS
+   These become the visual backbone of the "how to"
+   section.
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .method {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: .5rem;
+
+    padding: 1.35rem 1.5rem 1.4rem;
+
+    border: 1px solid rgba(22, 22, 22, .18);
+    border-left: 4px solid var(--blue);
+
+    background: #fff;
+
+    box-shadow:
+        4px 4px 0 rgba(22, 22, 22, .08);
+}
+
+
+/* Slightly more breathing room between method cards */
+
+.lesson-instance[data-lesson="0"] .method + .method {
+    margin-top: 1rem;
+}
+
+
+/* Label */
+
+.lesson-instance[data-lesson="0"] .method .method-label {
+    display: inline-flex;
+    align-items: center;
+
+    width: fit-content;
+
+    margin-bottom: .15rem;
+    padding: .28rem .5rem;
+
+    background: var(--blue);
+    color: #fff;
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    font-weight: 700;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+
+/* Heading */
+
+.lesson-instance[data-lesson="0"] .method h4 {
+    margin-bottom: .4rem;
+
+    font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+}
+
+
+/* Paragraphs inside cards */
+
+.lesson-instance[data-lesson="0"] .method p {
+    max-width: 65ch;
+
+    margin-top: .55rem;
+
+    font-size: .9rem;
+    line-height: 1.65;
+}
+
+
+/* Lists inside cards */
+
+.lesson-instance[data-lesson="0"] .method ul,
+.lesson-instance[data-lesson="0"] .method ol {
+    margin-top: .65rem;
+}
+
+
+/* ---------------------------------------------------------
+   4. MAKE THE STEP CARDS FEEL LIKE A SEQUENCE
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .method .method-label {
+    position: relative;
+}
+
+
+/* Highlight the actual numbered steps */
+
+.lesson-instance[data-lesson="0"] .method .method-label {
+    box-shadow: 2px 2px 0 rgba(22, 22, 22, .12);
+}
+
+
+/* ---------------------------------------------------------
+   5. KEY IDEA / REMEMBER / IMPORTANT / FINAL CHECK
+   Give non-step cards a slightly different treatment.
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .method:has(.method-label) {
+    overflow: hidden;
+}
+
+
+/* Make the final-check card especially noticeable */
+
+.lesson-instance[data-lesson="0"] .method:has(.method-label) p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   6. ELECTRON "BUDGET" EMPHASIS
+   The paragraph explaining the total should stand out.
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .method b {
+    color: var(--ink);
+}
+
+
+/* ---------------------------------------------------------
+   7. FIGURES
+   Cleaner, slightly lighter than the existing generic boxes.
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .lesson-figure,
+.lesson-instance[data-lesson="0"] .lesson-figure-large {
+    background: #fff;
+
+    border-color: rgba(22, 22, 22, .16);
+
+    box-shadow:
+        5px 5px 0 rgba(22, 22, 22, .08);
+}
+
+
+/* Figure labels */
+
+.lesson-instance[data-lesson="0"] .lesson-figure-label,
+.lesson-instance[data-lesson="0"] .lesson-figure-large-label {
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    font-weight: 700;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+
+/* ---------------------------------------------------------
+   8. COLOUR LEGEND
+   Makes blue/orange/green explanatory words more obvious.
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] blue,
+.lesson-instance[data-lesson="0"] orange,
+.lesson-instance[data-lesson="0"] green {
+    font-weight: 750;
+}
+
+.lesson-instance[data-lesson="0"] blue {
+    color: #0751c8;
+}
+
+.lesson-instance[data-lesson="0"] orange {
+    color: #c8380c;
+}
+
+.lesson-instance[data-lesson="0"] green {
+    color: #1c8a3c;
+}
+
+
+/* ---------------------------------------------------------
+   9. VALENCE ELECTRON QUIZ
+   Make it feel like an actual exercise rather than a form.
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .ve-quiz {
+    background: #fff;
+
+    border-color: rgba(22, 22, 22, .18);
+
+    box-shadow:
+        5px 5px 0 rgba(22, 22, 22, .08);
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-header {
+    padding-bottom: 1rem;
+
+    border-bottom: 1px solid rgba(22, 22, 22, .12);
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-header h4 {
+    margin-top: .55rem;
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-list {
+    margin-top: 0;
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-row {
+    min-height: 58px;
+
+    border-bottom: 1px solid rgba(22, 22, 22, .10);
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-row:last-child {
+    border-bottom: 0;
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-element {
+    font-weight: 650;
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-input {
+    width: 72px;
+    height: 42px;
+
+    border: 1px solid rgba(22, 22, 22, .3);
+
+    background: #fff;
+
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+
+    text-align: center;
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-input:focus {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+}
+
+
+/* ---------------------------------------------------------
+   10. DRAWING EXERCISES
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .lewis-draw {
+    background: #fff;
+
+    border-color: rgba(22, 22, 22, .18);
+
+    box-shadow:
+        5px 5px 0 rgba(22, 22, 22, .08);
+}
+
+
+.lesson-instance[data-lesson="0"] .lewis-draw-header {
+    padding-bottom: 1rem;
+}
+
+
+.lesson-instance[data-lesson="0"] .lewis-draw-header h4 {
+    margin-top: .55rem;
+    margin-bottom: .45rem;
+}
+
+
+.lesson-instance[data-lesson="0"] .lewis-draw-header p {
+    margin-top: .4rem;
+
+    max-width: 60ch;
+
+    font-size: .88rem;
+}
+
+
+/* Toolbar */
+
+.lesson-instance[data-lesson="0"] .lewis-draw-toolbar {
+    border-top: 1px solid rgba(22, 22, 22, .12);
+    border-bottom: 1px solid rgba(22, 22, 22, .12);
+
+    background: #faf9f5;
+}
+
+
+/* Canvas area */
+
+.lesson-instance[data-lesson="0"] .lewis-draw-canvas-wrap {
+    margin-top: 1rem;
+
+    border: 1px solid rgba(22, 22, 22, .15);
+
+    background: #fff;
+}
+
+
+/* Footer */
+
+.lesson-instance[data-lesson="0"] .lewis-draw-footer {
+    padding-top: 1rem;
+}
+
+
+/* ---------------------------------------------------------
+   11. "SHOW ANSWER" BUTTON
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .lewis-reveal {
+    font-weight: 700;
+}
+
+
+/* ---------------------------------------------------------
+   12. PRACTICE HEADINGS
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .lewis-draw-header
+.lesson-figure-label {
+    color: var(--blue);
+}
+
+
+/* ---------------------------------------------------------
+   13. FINAL TAKEAWAY
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .paper:last-child .method {
+    border-left-color: var(--yellow);
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #fffdf2
+        );
+}
+
+
+.lesson-instance[data-lesson="0"] .paper:last-child .method .method-label {
+    background: var(--ink);
+}
+
+
+/* ---------------------------------------------------------
+   14. BETTER LIST SPACING
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .paper li::marker {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+
+.lesson-instance[data-lesson="0"] .paper ol li::marker {
+    font-family: var(--mono);
+}
+
+
+/* ---------------------------------------------------------
+   15. RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .lesson-instance[data-lesson="0"] .method {
+        padding: 1.1rem;
+    }
+
+    .lesson-instance[data-lesson="0"] .lesson-figure,
+    .lesson-instance[data-lesson="0"] .lesson-figure-large {
+        grid-template-columns: 1fr;
+    }
+
+    .lesson-instance[data-lesson="0"] .lesson-figure-image,
+    .lesson-instance[data-lesson="0"] .lesson-figure-large-image {
+        order: 2;
+    }
+
+    .lesson-instance[data-lesson="0"] .ve-quiz-row {
+        min-height: 54px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .lesson-instance[data-lesson="0"] .method {
+        padding: 1rem;
+        box-shadow: 3px 3px 0 rgba(22, 22, 22, .08);
+    }
+
+    .lesson-instance[data-lesson="0"] .method .method-label {
+        font-size: .57rem;
+    }
+
+    .lesson-instance[data-lesson="0"] .ve-quiz-input {
+        width: 64px;
+    }
+}
+
+/* =========================================================
+   LEWIS STRUCTURES — VALENCE ELECTRON QUIZ
+   ========================================================= */
+
+.lesson-instance[data-lesson="0"] .ve-quiz {
+    width: 100%;
+}
+
+
+/* ---------------------------------------------------------
+   QUIZ ROW
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .ve-quiz-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(80px, 1fr)
+        minmax(140px, 2fr)
+        minmax(150px, auto)
+        minmax(30px, auto);
+
+    align-items: center;
+
+    column-gap: 1.25rem;
+
+    min-height: 68px;
+
+    padding: .65rem 0;
+
+    border-bottom: 1px solid rgba(22, 22, 22, .10);
+}
+
+
+/* ---------------------------------------------------------
+   SPECIES
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .ve-quiz-element {
+    font-size: 1.05rem;
+    font-weight: 750;
+}
+
+
+/* Make chemical subscripts look natural */
+
+.lesson-instance[data-lesson="0"] .ve-quiz-element sub {
+    font-size: .7em;
+    line-height: 0;
+}
+
+
+/* ---------------------------------------------------------
+   DESCRIPTION / COMPOSITION
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .ve-quiz-formula {
+    color: #666;
+
+    font-family: var(--mono);
+    font-size: .72rem;
+
+    letter-spacing: .01em;
+}
+
+
+/* ---------------------------------------------------------
+   ANSWER AREA
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .ve-quiz-answer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: .55rem;
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-input {
+    width: 58px;
+    height: 42px;
+
+    padding: .2rem;
+
+    border: 1px solid rgba(22, 22, 22, .25);
+
+    background: #fff;
+
+    font-family: var(--mono);
+    font-size: .95rem;
+    font-weight: 700;
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-input:focus {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+}
+
+
+.lesson-instance[data-lesson="0"] .ve-quiz-unit {
+    white-space: nowrap;
+
+    color: #555;
+
+    font-size: .72rem;
+}
+
+
+/* ---------------------------------------------------------
+   RESULT
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"] .ve-quiz-result {
+    min-width: 25px;
+
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+
+/* ---------------------------------------------------------
+   VISUAL DISTINCTION BETWEEN ATOMS AND MOLECULES
+   --------------------------------------------------------- */
+
+
+
+/* Give molecules a tiny bit more visual emphasis */
+
+.lesson-instance[data-lesson="0"]
+.ve-quiz-row:nth-child(n+4)
+.ve-quiz-element {
+    color: var(--blue);
+}
+
+
+/* ---------------------------------------------------------
+   QUIZ HEADER METHOD BOX
+   --------------------------------------------------------- */
+
+.lesson-instance[data-lesson="0"]
+.ve-quiz-header > .method {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .lesson-instance[data-lesson="0"] .ve-quiz-row {
+        grid-template-columns:
+            70px
+            1fr
+            auto;
+
+        row-gap: .35rem;
+    }
+
+    .lesson-instance[data-lesson="0"]
+    .ve-quiz-formula {
+        font-size: .68rem;
+    }
+
+    .lesson-instance[data-lesson="0"]
+    .ve-quiz-answer {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+    }
+
+    .lesson-instance[data-lesson="0"]
+    .ve-quiz-result {
+        display: none;
+    }
+}
+
+/* =========================================================
+   CH2O WORKED EXAMPLE
+   ========================================================= */
+
+.worked-example {
+    margin-top: 2rem;
+
+    border: 1px solid rgba(22, 22, 22, .18);
+
+    background: #fff;
+
+    box-shadow:
+        6px 6px 0 rgba(22, 22, 22, .08);
+
+    overflow: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   TOP BANNER
+   --------------------------------------------------------- */
+
+.worked-example-header {
+    padding: 1.5rem 1.6rem 1.35rem;
+
+    background: #faf9f5;
+
+    border-bottom: 1px solid rgba(22, 22, 22, .14);
+}
+
+
+.worked-example-kicker {
+    display: inline-block;
+
+    margin-bottom: .7rem;
+    padding: .3rem .55rem;
+
+    background: var(--blue);
+    color: #fff;
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    font-weight: 700;
+
+    letter-spacing: .08em;
+}
+
+
+.worked-example-title-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 2rem;
+}
+
+
+.worked-example-title-row h4 {
+    margin: 0 0 .4rem;
+
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+
+.worked-example-title-row p {
+    max-width: 60ch;
+
+    margin: 0;
+
+    font-size: .88rem;
+    line-height: 1.55;
+}
+
+
+.worked-example-formula {
+    flex: 0 0 auto;
+
+    padding: .65rem 1rem;
+
+    border: 1px solid rgba(22, 22, 22, .18);
+
+    background: #fff;
+
+    font-family: var(--mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+
+.worked-example-formula sub {
+    font-size: .7em;
+}
+
+
+/* ---------------------------------------------------------
+   KEY TERMS
+   --------------------------------------------------------- */
+
+.worked-example-meta {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 1rem;
+
+    margin-top: 1.25rem;
+}
+
+
+.worked-example-meta > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: .55rem;
+
+    font-size: .72rem;
+}
+
+
+.worked-example-meta-label {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 38px;
+    min-height: 25px;
+
+    padding: .2rem .35rem;
+
+    background: var(--ink);
+    color: #fff;
+
+    font-family: var(--mono);
+    font-size: .58rem;
+    font-weight: 700;
+}
+
+
+/* ---------------------------------------------------------
+   FULL-WIDTH IMAGE
+   --------------------------------------------------------- */
+
+.worked-example-image {
+    width: 100%;
+
+    padding: 1.25rem;
+
+    background: #fff;
+
+    border-bottom: 1px solid rgba(22, 22, 22, .12);
+}
+
+
+.worked-example-image img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-height: 600px;
+
+    object-fit: contain;
+}
+
+
+/* ---------------------------------------------------------
+   ANNOTATIONS
+   --------------------------------------------------------- */
+
+.worked-example-notes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 0;
+
+    background: #fff;
+}
+
+
+.worked-example-note {
+    display: grid;
+
+    grid-template-columns: auto 1fr;
+
+    gap: .75rem;
+
+    padding: 1.15rem 1.2rem 1.25rem;
+}
+
+
+.worked-example-note + .worked-example-note {
+    border-left: 1px solid rgba(22, 22, 22, .12);
+}
+
+
+.worked-example-note-number {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    background: var(--yellow);
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    font-weight: 700;
+}
+
+
+.worked-example-note h5 {
+    margin: .05rem 0 .35rem;
+
+    font-size: .82rem;
+    line-height: 1.25;
+}
+
+
+.worked-example-note p {
+    margin: 0;
+
+    font-size: .78rem;
+    line-height: 1.55;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .worked-example-title-row {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 1rem;
+    }
+
+
+    .worked-example-meta {
+        grid-template-columns: 1fr;
+    }
+
+
+    .worked-example-notes {
+        grid-template-columns: 1fr;
+    }
+
+
+    .worked-example-note + .worked-example-note {
+        border-left: 0;
+
+        border-top: 1px solid rgba(22, 22, 22, .12);
+    }
+}
+
+/* =========================================================
+   LESSON PROGRESS
+   ========================================================= */
+
+.lesson-topbar {
+    position: relative;
+}
+
+
+.lesson-progress {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 3px;
+
+    background: rgba(22, 22, 22, .08);
+}
+
+
+.lesson-progress-bar {
+    width: 0;
+
+    height: 100%;
+
+    background: var(--blue);
+
+    transition:
+        width .35s ease;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .lesson-progress-bar {
+        transition: none;
+    }
+
+}
+
+[hidden] { display: none !important; }
+
+
+/* =========================================================
+   LESSON CLOSING SLIDE
+   ========================================================= */
+
+.lesson-closing {
+    width: 100%;
+    min-height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding: clamp(2rem, 5vw, 4rem);
+}
+
+
+/* ---------------------------------------------------------
+   CLOSING CARD
+   --------------------------------------------------------- */
+
+.closing-inner {
+    width: min(900px, 100%);
+
+    margin: 0 auto;
+
+    padding: clamp(2rem, 5vw, 4rem);
+
+    box-sizing: border-box;
+
+    border-top: 4px solid var(--blue);
+
+    background: #fff;
+
+    box-shadow:
+        6px 6px 0 rgba(22, 22, 22, .08);
+}
+
+
+/* ---------------------------------------------------------
+   KICKER
+   --------------------------------------------------------- */
+
+.closing-kicker {
+    display: inline-block;
+
+    margin-bottom: 1.1rem;
+    padding: .3rem .55rem;
+
+    background: var(--blue);
+    color: #fff;
+
+    font-family: var(--mono);
+    font-size: .62rem;
+    font-weight: 700;
+
+    letter-spacing: .08em;
+}
+
+
+/* ---------------------------------------------------------
+   TITLE
+   --------------------------------------------------------- */
+
+.closing-inner h2 {
+    margin: 0 0 .75rem;
+
+    font-size: clamp(
+        2rem,
+        5vw,
+        3.5rem
+    );
+
+    line-height: .98;
+}
+
+
+.closing-lead {
+    max-width: 58ch;
+
+    margin: 0 0 2rem;
+
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+
+/* ---------------------------------------------------------
+   CHECKLIST
+   --------------------------------------------------------- */
+
+.closing-checklist {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    border-top: 1px solid rgba(22, 22, 22, .14);
+    border-bottom: 1px solid rgba(22, 22, 22, .14);
+}
+
+
+.closing-check {
+    display: grid;
+
+    grid-template-columns: auto 1fr;
+
+    gap: .75rem;
+
+    padding: 1.25rem 1rem;
+}
+
+
+.closing-check + .closing-check {
+    border-left: 1px solid rgba(22, 22, 22, .14);
+}
+
+
+.closing-number {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    background: var(--yellow);
+
+    font-family: var(--mono);
+    font-size: .6rem;
+    font-weight: 700;
+}
+
+
+.closing-check b {
+    display: block;
+
+    margin-bottom: .35rem;
+
+    font-size: .8rem;
+}
+
+
+.closing-check p {
+    margin: 0;
+
+    font-size: .72rem;
+    line-height: 1.5;
+}
+
+
+/* ---------------------------------------------------------
+   NEXT SECTION
+   --------------------------------------------------------- */
+
+.closing-transition {
+    display: flex;
+
+    align-items: center;
+
+    gap: .8rem;
+
+    margin-top: 2rem;
+    padding-top: 1rem;
+
+    border-top: 0;
+}
+
+
+.closing-transition-label {
+    font-family: var(--mono);
+    font-size: .58rem;
+    font-weight: 700;
+
+    letter-spacing: .08em;
+
+    color: #777;
+}
+
+
+.closing-transition strong {
+    font-size: .95rem;
+}
+
+
+.closing-arrow {
+    margin-left: auto;
+
+    font-size: 1.25rem;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .lesson-closing {
+        min-height: auto;
+
+        padding: 1.5rem;
+    }
+
+
+    .closing-inner {
+        width: 100%;
+
+        padding: 1.5rem;
+    }
+
+
+    .closing-checklist {
+        grid-template-columns: 1fr;
+    }
+
+
+    .closing-check + .closing-check {
+        border-left: 0;
+
+        border-top: 1px solid rgba(22, 22, 22, .14);
+    }
+
+
+    .closing-transition {
+        flex-wrap: wrap;
+    }
+
+
+    .closing-arrow {
+        margin-left: 0;
+    }
+
+}
+
+/* =========================================================
+   POLARITY — LESSON-SPECIFIC PEDAGOGY / LAYOUT
+   ========================================================= */
+
+.polarity-intro {
+    position: relative;
+}
+
+.polarity-rule {
+    margin: 1.75rem 0 0;
+    padding: 1rem 1.15rem;
+    border-left: 4px solid var(--ink);
+    background: rgba(0, 0, 0, .045);
+}
+
+.polarity-rule-label {
+    display: block;
+    margin-bottom: .35rem;
+
+    font-family: var(--display);
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.polarity-rule p {
+    margin: 0;
+}
+
+
+/* ---------------------------------------------------------
+   TWO-COLUMN CONCEPT CARDS
+   --------------------------------------------------------- */
+
+.polarity-two-column {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.polarity-mini-card {
+    padding: 1.15rem;
+    border: 1px solid rgba(0, 0, 0, .18);
+    background: rgba(255, 255, 255, .22);
+}
+
+.polarity-mini-number {
+    display: block;
+    margin-bottom: .65rem;
+
+    font-family: var(--display);
+    font-size: .72rem;
+    letter-spacing: .12em;
+    opacity: .55;
+}
+
+.polarity-mini-card h4 {
+    margin-top: 0;
+}
+
+.polarity-mini-card p {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   METHOD
+   --------------------------------------------------------- */
+
+.polarity-method {
+    margin-top: 0;
+}
+
+.polarity-steps {
+    margin: 1rem 0 0;
+    padding-left: 1.5rem;
+}
+
+.polarity-steps li {
+    margin-bottom: .7rem;
+    padding-left: .25rem;
+}
+
+.polarity-steps li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   BOND POLARITY FLOW
+   --------------------------------------------------------- */
+
+.polarity-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: .65rem;
+    align-items: stretch;
+
+    margin-top: 1.5rem;
+}
+
+.polarity-flow-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    min-height: 105px;
+    padding: 1rem;
+
+    border: 1px solid rgba(0, 0, 0, .18);
+    background: rgba(255, 255, 255, .22);
+
+    text-align: center;
+}
+
+.polarity-flow-step span {
+    margin-bottom: .45rem;
+
+    font-family: var(--display);
+    font-size: .7rem;
+    opacity: .55;
+}
+
+.polarity-flow-arrow {
+    align-self: center;
+
+    font-family: var(--display);
+    font-size: 1.2rem;
+    opacity: .5;
+}
+
+
+/* ---------------------------------------------------------
+   PARTIAL CHARGES
+   --------------------------------------------------------- */
+
+.polarity-charge-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    margin: 1.5rem 0;
+}
+
+.polarity-charge {
+    padding: 1.25rem;
+
+    border: 1px solid rgba(0, 0, 0, .18);
+    background: rgba(255, 255, 255, .22);
+}
+
+.polarity-charge-symbol {
+    display: block;
+    margin-bottom: .5rem;
+
+    font-family: var(--display);
+    font-size: 2rem;
+}
+
+.polarity-charge h4 {
+    margin-top: 0;
+}
+
+
+/* ---------------------------------------------------------
+   SIMPLE BOND EXAMPLE
+   --------------------------------------------------------- */
+
+/* =========================================================
+   POLARITY WORKED EXAMPLE
+   ========================================================= */
+
+.polarity-example {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    margin: 2rem 0;
+
+    padding: 1.5rem 1rem 1rem;
+
+    background: #f7f5ef;
+    border: 1px solid rgba(26, 23, 20, .15);
+}
+
+
+/* ---------------------------------------------------------
+   Dipole arrow
+   --------------------------------------------------------- */
+
+.polarity-arrow {
+    display: block;
+
+    width: min(420px, 80%);
+    height: 55px;
+
+    margin-bottom: .15rem;
+
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 2.5;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    overflow: visible;
+}
+
+
+/* ---------------------------------------------------------
+   Actual chemical bond
+   --------------------------------------------------------- */
+
+.polarity-bond-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: .65rem;
+
+    font-family: var(--body);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 500;
+
+    line-height: 1;
+}
+
+
+/* Atoms */
+
+.polarity-atom {
+    font-size: 1em;
+}
+
+
+/* The actual H–Cl bond */
+
+.polarity-bond {
+    font-size: .9em;
+    line-height: 1;
+
+    letter-spacing: -.08em;
+}
+
+
+/* Partial charges */
+
+.polarity-delta {
+    font-size: .55em;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.polarity-delta {
+    font-size: .85rem;
+    opacity: .7;
+}
+
+.polarity-bond {
+    letter-spacing: -.15em;
+}
+
+
+/* ---------------------------------------------------------
+   POLARITY CHAIN
+   --------------------------------------------------------- */
+
+.polarity-chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem .7rem;
+
+    margin-top: 1.5rem;
+    padding: 1rem;
+
+    border-top: 1px solid rgba(0, 0, 0, .18);
+    border-bottom: 1px solid rgba(0, 0, 0, .18);
+
+    font-family: var(--display);
+    font-size: .78rem;
+    text-align: center;
+}
+
+.polarity-chain-large {
+    margin: 1.5rem 0;
+    font-size: .82rem;
+}
+
+
+/* ---------------------------------------------------------
+   WORKED EXAMPLE
+   --------------------------------------------------------- */
+
+.polarity-question-steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    margin-top: 1.5rem;
+}
+
+.polarity-question-steps > div {
+    padding: 1rem;
+
+    border: 1px solid rgba(0, 0, 0, .18);
+    background: rgba(255, 255, 255, .22);
+}
+
+.polarity-question-steps > div > span {
+    display: block;
+    margin-bottom: .45rem;
+
+    font-family: var(--display);
+    font-size: .7rem;
+    opacity: .55;
+}
+
+.polarity-question-steps h4 {
+    margin-top: 0;
+}
+
+.polarity-question-steps p {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   POLARITY QUESTION IMAGE
+   --------------------------------------------------------- */
+
+.polarity-question .polar-q {
+    margin-top: 1.5rem;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 760px) {
+
+    .polarity-two-column,
+    .polarity-charge-grid,
+    .polarity-question-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .polarity-flow {
+        grid-template-columns: 1fr;
+    }
+
+    .polarity-flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .polarity-example {
+        font-size: 1.1rem;
+    }
+
+}
+
+/* =========================================================
+   91164 — POLARITY + MOLECULAR SHAPES
+   Lesson-specific additions
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   POLARITY — SECTION COMPLETE
+   --------------------------------------------------------- */
+
+.section-complete {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2rem, 5vw, 4rem);
+}
+
+.section-complete-kicker {
+    display: block;
+    margin-bottom: 1rem;
+
+    font-family: var(--display);
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    opacity: .55;
+}
+
+.section-complete h2 {
+    max-width: 8ch;
+    margin-bottom: 1rem;
+
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: .95;
+}
+
+.section-complete-lead {
+    max-width: 650px;
+    font-size: 1.05rem;
+}
+
+.section-complete-chain {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+
+    margin: 2.5rem 0;
+
+    background: rgba(0, 0, 0, .2);
+    border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.section-complete-chain > div {
+    min-height: 150px;
+    padding: 1rem;
+    background: var(--paper);
+}
+
+.section-complete-chain span {
+    display: block;
+    margin-bottom: .65rem;
+
+    font-family: var(--display);
+    font-size: .7rem;
+    opacity: .55;
+}
+
+.section-complete-chain b {
+    display: block;
+    margin-bottom: .5rem;
+}
+
+.section-complete-chain p {
+    margin: 0;
+    font-size: .85rem;
+}
+
+.section-complete-rule {
+    margin: 2rem 0;
+    padding: 1.2rem;
+
+    border-left: 4px solid var(--ink);
+    background: rgba(0, 0, 0, .045);
+}
+
+.section-complete-rule > span {
+    display: block;
+    margin-bottom: .45rem;
+
+    font-family: var(--display);
+    font-size: .7rem;
+    letter-spacing: .12em;
+}
+
+.section-complete-rule p {
+    margin: 0;
+}
+
+.section-complete-check {
+    margin-top: 2rem;
+}
+
+.section-complete-check h3 {
+    margin-bottom: .75rem;
+}
+
+.section-complete-check ul {
+    margin: 0;
+}
+
+.section-complete-next {
+    margin-top: 1.75rem;
+    padding: .8rem 1.1rem;
+
+    border: 1px solid var(--ink);
+    background: transparent;
+
+    font: 500 .85rem var(--body);
+    cursor: pointer;
+}
+
+.section-complete-next:hover {
+    background: var(--ink);
+    color: var(--white);
+}
+
+
+/* ---------------------------------------------------------
+   MOLECULAR SHAPES — CONCEPT CARDS
+   --------------------------------------------------------- */
+
+.shape-concept-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    margin-top: 1.5rem;
+}
+
+.shape-concept-card {
+    padding: 1.25rem;
+
+    border: 1px solid rgba(0, 0, 0, .18);
+    background: rgba(255, 255, 255, .22);
+}
+
+.shape-concept-card > span {
+    display: block;
+    margin-bottom: .6rem;
+
+    font-family: var(--display);
+    font-size: .7rem;
+    opacity: .55;
+}
+
+.shape-concept-card h4 {
+    margin-top: 0;
+}
+
+.shape-concept-card p {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   MOLECULAR SHAPES — BIG IDEA
+   --------------------------------------------------------- */
+
+.shape-rule {
+    position: relative;
+}
+
+.shape-chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem .7rem;
+
+    margin-top: 1.5rem;
+    padding: 1rem;
+
+    border-top: 1px solid rgba(0, 0, 0, .18);
+    border-bottom: 1px solid rgba(0, 0, 0, .18);
+
+    font-family: var(--display);
+    font-size: .78rem;
+    text-align: center;
+}
+
+.shape-chain-large {
+    margin: 1.5rem 0;
+    font-size: .82rem;
+}
+
+
+/* ---------------------------------------------------------
+   MOLECULAR SHAPES — NOTES / CALLOUT
+   --------------------------------------------------------- */
+
+.shape-note {
+    margin-top: 1.5rem;
+    padding: 1rem 1.15rem;
+
+    border-left: 4px solid var(--ink);
+    background: rgba(0, 0, 0, .045);
+}
+
+.shape-note span {
+    display: block;
+    margin-bottom: .4rem;
+
+    font-family: var(--display);
+    font-size: .7rem;
+    letter-spacing: .12em;
+}
+
+.shape-note p {
+    margin: 0;
+}
+
+
+/* ---------------------------------------------------------
+   MOLECULAR SHAPES — GEOMETRY TABLE
+   --------------------------------------------------------- */
+
+.geometry-table {
+    margin-top: 1.5rem;
+
+    border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.geometry-row {
+    display: grid;
+    grid-template-columns: .7fr 1.8fr 1fr;
+
+    border-bottom: 1px solid rgba(0, 0, 0, .16);
+}
+
+.geometry-row:last-child {
+    border-bottom: 0;
+}
+
+.geometry-row > span {
+    padding: .85rem 1rem;
+}
+
+.geometry-row > span + span {
+    border-left: 1px solid rgba(0, 0, 0, .16);
+}
+
+.geometry-head {
+    font-family: var(--display);
+    font-size: .72rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, .045);
+}
+
+
+/* ---------------------------------------------------------
+   MOLECULAR SHAPES — SHAPE COMPARISON
+   --------------------------------------------------------- */
+
+.shape-compare {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    margin-top: 1.5rem;
+}
+
+.shape-compare > div {
+    padding: 1.15rem;
+
+    border: 1px solid rgba(0, 0, 0, .18);
+    background: rgba(255, 255, 255, .22);
+}
+
+.shape-compare-number {
+    display: block;
+    margin-bottom: .55rem;
+
+    font-family: var(--display);
+    font-size: .7rem;
+    opacity: .55;
+}
+
+.shape-compare h4 {
+    margin-top: 0;
+}
+
+.shape-compare p {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   MOLECULAR SHAPES — METHOD
+   --------------------------------------------------------- */
+
+.shape-steps {
+    margin: 1rem 0 0;
+    padding-left: 1.5rem;
+}
+
+.shape-steps li {
+    margin-bottom: .7rem;
+    padding-left: .25rem;
+}
+
+.shape-steps li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 760px) {
+
+    .section-complete-chain {
+        grid-template-columns: 1fr;
+    }
+
+    .section-complete-chain > div {
+        min-height: 0;
+    }
+
+    .shape-concept-grid,
+    .shape-compare {
+        grid-template-columns: 1fr;
+    }
+
+    .geometry-row {
+        grid-template-columns: .65fr 1.5fr 1fr;
+    }
+
+    .geometry-row > span {
+        padding: .7rem .65rem;
+        font-size: .85rem;
+    }
+
+    .shape-chain {
+        flex-direction: column;
+    }
+
+}
+
+
+/* =========================================================
+   POLARITY DRAWING COLOURS
+   Matches the current HTML data-color values
+   ========================================================= */
+
+button.lewis-color[data-color="#111111"] {
+    background: #111111 !important;
+}
+
+button.lewis-color[data-color="#c33"] {
+    background: #c33 !important;
+}
+
+button.lewis-color[data-color="#1757ff"] {
+    background: #1757ff !important;
+}
+
+/* =========================================================
+   HEAT CALCULATIONS & DIAGRAMS
+   Lesson-specific teaching components
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   HEAT INTRO — ENDO / EXO
+   --------------------------------------------------------- */
+
+.heat-direction-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 1rem;
+
+    margin-top: 2rem;
+}
+
+
+.heat-direction {
+    padding: 1.5rem;
+
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+
+.heat-direction--endo {
+    background: var(--paper-blue);
+}
+
+
+.heat-direction--exo {
+    background: var(--paper-yellow);
+}
+
+
+.heat-direction-number {
+    display: inline-block;
+
+    margin-bottom: 1rem;
+    padding: .3rem .5rem;
+
+    background: var(--ink);
+    color: #fff;
+
+    font-family: var(--mono);
+    font-size: .6rem;
+    font-weight: 700;
+
+    letter-spacing: .08em;
+}
+
+
+.heat-direction h4 {
+    margin: 0 0 .5rem;
+
+    font-size: 1.15rem;
+}
+
+
+.heat-direction p {
+    margin: 0 0 1rem;
+}
+
+
+.heat-arrow {
+    padding-top: .8rem;
+
+    border-top: 1px solid rgba(22,22,22,.2);
+
+    font-family: var(--mono);
+    font-size: .7rem;
+    font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------
+   THREE WAYS TO IDENTIFY ENERGY CHANGE
+   --------------------------------------------------------- */
+
+.heat-evidence-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    margin-top: 1.5rem;
+
+    border-top: 1px solid var(--soft-rule);
+    border-bottom: 1px solid var(--soft-rule);
+}
+
+
+.heat-evidence {
+    padding: 1.25rem 1rem;
+}
+
+
+.heat-evidence + .heat-evidence {
+    border-left: 1px solid var(--soft-rule);
+}
+
+
+.heat-evidence-number {
+    display: block;
+
+    margin-bottom: .7rem;
+
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+    font-weight: 700;
+}
+
+
+.heat-evidence h4 {
+    margin: 0 0 .7rem;
+
+    font-size: .95rem;
+}
+
+
+.heat-evidence p {
+    margin: 0 0 .75rem;
+
+    font-size: .78rem;
+    line-height: 1.55;
+}
+
+
+.heat-evidence p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   EQUATIONS
+   --------------------------------------------------------- */
+
+.heat-equation {
+    margin: 1.25rem 0;
+    padding: 1rem 1.25rem;
+
+    background: var(--paper-light);
+
+    border-left: 4px solid var(--blue);
+
+    font-family: var(--mono);
+    font-size: .9rem;
+    line-height: 1.6;
+}
+
+
+.heat-main-equation {
+    margin-block: 1.75rem;
+
+    font-size: clamp(1.25rem, 3vw, 1.8rem);
+}
+
+
+.heat-worked-equation {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: .5rem;
+
+    font-size: 1rem;
+}
+
+
+/* ---------------------------------------------------------
+   ENERGY LEVEL DIAGRAMS
+   --------------------------------------------------------- */
+
+.heat-diagram-rule {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 1rem;
+
+    margin-top: 1.75rem;
+}
+
+
+.heat-diagram-rule > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: .45rem;
+
+    padding: 1rem;
+
+    border: 2px solid var(--ink);
+}
+
+
+.heat-diagram-rule > div:first-child {
+    background: var(--paper-yellow);
+}
+
+
+.heat-diagram-rule > div:last-child {
+    background: var(--paper-blue);
+}
+
+
+.heat-diagram-rule span {
+    font-family: var(--mono);
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+}
+
+
+.heat-diagram-rule strong {
+    font-size: .9rem;
+}
+
+
+.heat-diagram-rule small {
+    font-size: .72rem;
+    line-height: 1.45;
+}
+
+
+/* ---------------------------------------------------------
+   NCEA CHECK
+   --------------------------------------------------------- */
+
+.heat-check {
+    background: var(--paper-light);
+}
+
+
+.heat-steps {
+    margin: 1.25rem 0 0;
+    padding-left: 1.4rem;
+}
+
+
+.heat-steps li {
+    margin-bottom: .8rem;
+
+    line-height: 1.55;
+}
+
+
+.heat-steps li:last-child {
+    margin-bottom: 0;
+}
+
+
+.heat-example {
+    display: flex;
+    flex-direction: column;
+
+    gap: .35rem;
+
+    margin-top: 1.5rem;
+    padding: 1rem;
+
+    border-left: 4px solid var(--blue);
+
+    background: var(--paper-blue);
+}
+
+
+.heat-example span {
+    font-family: var(--mono);
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+}
+
+
+.heat-example strong {
+    font-size: .85rem;
+}
+
+
+.heat-example small {
+    margin-top: .25rem;
+
+    font-size: .72rem;
+    line-height: 1.5;
+}
+
+
+/* ---------------------------------------------------------
+   FORMULA REMINDER
+   --------------------------------------------------------- */
+
+.heat-formula-reminder {
+    display: grid;
+
+    grid-template-columns:
+        auto 1fr 1fr;
+
+    gap: 1rem;
+
+    align-items: center;
+
+    margin: 1.5rem 0;
+    padding: 1rem;
+
+    background: var(--paper-yellow);
+
+    border: 2px solid var(--ink);
+}
+
+
+.heat-formula-reminder span {
+    font-family: var(--mono);
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+}
+
+
+.heat-formula-reminder strong {
+    font-family: var(--mono);
+    font-size: .85rem;
+}
+
+
+.heat-formula-reminder small {
+    font-size: .7rem;
+}
+
+
+/* ---------------------------------------------------------
+   q = n × ΔrH — THREE VARIABLES
+   --------------------------------------------------------- */
+
+.heat-three-things {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    margin-top: 1.5rem;
+
+    border-top: 1px solid var(--soft-rule);
+    border-bottom: 1px solid var(--soft-rule);
+}
+
+
+.heat-three-things > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: .25rem;
+
+    padding: 1rem;
+}
+
+
+.heat-three-things > div + div {
+    border-left: 1px solid var(--soft-rule);
+}
+
+
+.heat-three-things strong {
+    font-family: var(--mono);
+    font-size: 1.2rem;
+}
+
+
+.heat-three-things span {
+    font-size: .72rem;
+}
+
+
+.heat-three-things small {
+    color: var(--muted);
+
+    font-family: var(--mono);
+    font-size: .6rem;
+}
+
+
+/* ---------------------------------------------------------
+   MOLE OF REACTION
+   --------------------------------------------------------- */
+
+.heat-reaction-box {
+    display: flex;
+    flex-direction: column;
+
+    gap: .7rem;
+
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+
+    background: var(--paper-light);
+
+    border: 2px solid var(--ink);
+
+    text-align: center;
+}
+
+
+.heat-reaction-box strong {
+    font-family: var(--mono);
+    font-size: 1rem;
+}
+
+
+.heat-reaction-box span {
+    font-family: var(--mono);
+    font-size: .75rem;
+}
+
+
+.heat-warning {
+    display: flex;
+    flex-direction: column;
+
+    gap: .35rem;
+
+    margin-top: 1.5rem;
+    padding: 1rem;
+
+    background: var(--paper-red);
+
+    border-left: 4px solid var(--red);
+}
+
+
+.heat-warning strong {
+    font-size: .8rem;
+}
+
+
+.heat-warning span {
+    font-size: .72rem;
+}
+
+
+/* ---------------------------------------------------------
+   REARRANGING q = nΔrH
+   --------------------------------------------------------- */
+
+.heat-equation-stack {
+    display: grid;
+
+    gap: .75rem;
+
+    margin: 1.5rem 0;
+}
+
+
+.heat-equation-stack > div {
+    display: grid;
+
+    grid-template-columns:
+        minmax(120px, .35fr)
+        1fr;
+
+    gap: 1rem;
+
+    align-items: center;
+
+    padding: .9rem 1rem;
+
+    background: var(--paper-light);
+
+    border-left: 3px solid var(--blue);
+}
+
+
+.heat-equation-stack span {
+    font-family: var(--mono);
+    font-size: .62rem;
+    font-weight: 600;
+}
+
+
+.heat-equation-stack strong {
+    font-family: var(--mono);
+    font-size: .9rem;
+}
+
+
+/* ---------------------------------------------------------
+   BOND ENERGY
+   --------------------------------------------------------- */
+
+.bond-energy-balance {
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    gap: 1rem;
+
+    align-items: stretch;
+
+    margin: 1.75rem 0;
+}
+
+
+.bond-energy-balance > div:not(.bond-energy-operation) {
+    display: flex;
+    flex-direction: column;
+
+    gap: .4rem;
+
+    padding: 1.25rem;
+
+    border: 2px solid var(--ink);
+}
+
+
+.bond-energy-balance > div:first-child {
+    background: var(--paper-blue);
+}
+
+
+.bond-energy-balance > div:last-child {
+    background: var(--paper-yellow);
+}
+
+
+.bond-energy-label {
+    font-family: var(--mono);
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+}
+
+
+.bond-energy-balance strong {
+    font-size: .95rem;
+}
+
+
+.bond-energy-balance small {
+    font-size: .7rem;
+}
+
+
+.bond-energy-operation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+
+/* ---------------------------------------------------------
+   FINAL HEAT CLOSING SLIDE
+   Uses the shared closing-slide system, but gives this lesson
+   enough room for six reminder cards.
+   --------------------------------------------------------- */
+
+.heat-closing .closing-inner {
+    width: min(1000px, 100%);
+}
+
+
+.heat-closing .closing-checklist {
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+}
+
+
+.heat-closing .closing-check:nth-child(3) {
+    border-left: 1px solid rgba(22, 22, 22, .14);
+}
+
+
+.heat-closing .closing-check:nth-child(n + 3) {
+    border-top: 1px solid rgba(22, 22, 22, .14);
+}
+
+
+.heat-closing .closing-check:nth-child(4),
+.heat-closing .closing-check:nth-child(6) {
+    border-left: 1px solid rgba(22, 22, 22, .14);
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .heat-direction-grid,
+    .heat-evidence-grid,
+    .heat-diagram-rule,
+    .heat-three-things,
+    .bond-energy-balance {
+        grid-template-columns: 1fr;
+    }
+
+
+    .heat-evidence + .heat-evidence,
+    .heat-three-things > div + div {
+        border-left: 0;
+        border-top: 1px solid var(--soft-rule);
+    }
+
+
+    .bond-energy-operation {
+        padding: .25rem;
+    }
+
+
+    .heat-formula-reminder {
+        grid-template-columns: 1fr;
+    }
+
+
+    .heat-equation-stack > div {
+        grid-template-columns: 1fr;
+        gap: .35rem;
+    }
+
+
+    .heat-closing .closing-checklist {
+        grid-template-columns: 1fr;
+    }
+
+
+    .heat-closing .closing-check:nth-child(n) {
+        border-left: 0;
+    }
+
+
+    .heat-closing .closing-check + .closing-check {
+        border-top: 1px solid rgba(22, 22, 22, .14);
+    }
+
+}
+
+/* =========================================================
+   SOLIDS — STRUCTURE / FORCES / PROPERTIES
+   ========================================================= */
+
+.solids-intro {
+    position: relative;
+}
+
+
+/* ---------------------------------------------------------
+   STRUCTURE → FORCES CHAIN
+   --------------------------------------------------------- */
+
+.solids-chain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .65rem;
+    margin-top: 2rem;
+    padding: 1.25rem;
+    border-top: 1px solid rgba(26,23,20,.18);
+    border-bottom: 1px solid rgba(26,23,20,.18);
+    text-align: center;
+}
+
+.solids-chain strong {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding: .55rem .8rem;
+    background: rgba(26,23,20,.06);
+    border: 1px solid rgba(26,23,20,.14);
+    font-size: .82rem;
+    line-height: 1.25;
+}
+
+.solids-chain > span {
+    font-family: var(--display);
+    font-size: 1.05rem;
+}
+
+.solids-chain-large {
+    padding: 1.5rem 1rem;
+}
+
+
+/* ---------------------------------------------------------
+   PROPERTY CHAINS
+   --------------------------------------------------------- */
+
+.solids-property-chain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .55rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(26,23,20,.045);
+    border-left: 3px solid var(--text);
+    font-size: .88rem;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.solids-property-chain span:nth-child(even) {
+    font-family: var(--display);
+    font-size: 1rem;
+}
+
+
+/* ---------------------------------------------------------
+   LARGE SOLIDS IMAGE
+   --------------------------------------------------------- */
+
+.solids-feature-image {
+    max-width: 900px;
+    margin: 0 auto 1.5rem;
+}
+
+.solids-feature-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+/* ---------------------------------------------------------
+   COMPARISON TABLE
+   --------------------------------------------------------- */
+
+.solids-comparison {
+    margin-top: 1.75rem;
+}
+
+.solids-comparison .geometry-row {
+    grid-template-columns:
+        minmax(110px, .8fr)
+        minmax(130px, 1fr)
+        minmax(170px, 1.2fr)
+        minmax(180px, 1.3fr);
+}
+
+.solids-comparison .geometry-row > span {
+    line-height: 1.4;
+}
+
+
+/* ---------------------------------------------------------
+   EXAM METHOD
+   --------------------------------------------------------- */
+
+.solids-exam-method {
+    overflow: hidden;
+}
+
+.solids-method {
+    max-width: 760px;
+    margin: 2rem auto 0;
+}
+
+.solids-method-step {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 1rem 0;
+}
+
+.solids-method-step > span {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--text);
+    font-family: var(--display);
+    font-size: .85rem;
+}
+
+.solids-method-step h4 {
+    margin: 0 0 .3rem;
+}
+
+.solids-method-step p {
+    margin: 0;
+}
+
+.solids-method-arrow {
+    margin-left: 1.05rem;
+    font-family: var(--display);
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 760px) {
+
+    .solids-chain {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .solids-chain > span {
+        transform: rotate(90deg);
+        align-self: center;
+    }
+
+    .solids-property-chain {
+        flex-direction: column;
+    }
+
+    .solids-property-chain span:nth-child(even) {
+        transform: rotate(90deg);
+    }
+
+    .solids-comparison {
+        overflow-x: auto;
+    }
+
+    .solids-comparison .geometry-row {
+        min-width: 720px;
+    }
+
+    .solids-method-step {
+        grid-template-columns: 2.5rem 1fr;
+    }
+
+}
+
+/* =========================================================
+   ALL FRICTION — PAST PAPERS
+   Designed to match the lesson / slide system
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   PAST PAPER INDEX
+   --------------------------------------------------------- */
+
+.pp-intro {
+    max-width: 70ch;
+    margin: 0 0 1.5rem;
+    color: var(--text-soft);
+    font-size: .95rem;
+    line-height: 1.7;
+}
+
+.pp-list {
+    border-top: 2px solid var(--ink);
+}
+
+.pp-card {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr) auto;
+    gap: 1.25rem;
+    align-items: center;
+
+    min-height: 90px;
+    padding: 1rem .9rem;
+
+    background: rgba(255, 253, 248, .78);
+    border-bottom: 2px solid var(--ink);
+}
+
+.pp-year {
+    display: grid;
+    place-items: center;
+
+    width: 76px;
+    height: 76px;
+
+    background: var(--paper-blue);
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+
+    font: 500 .95rem var(--mono);
+    color: var(--ink);
+}
+
+.pp-card strong {
+    display: block;
+
+    font-family: var(--display);
+    font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -.025em;
+}
+
+.pp-card small {
+    display: block;
+    margin: .35rem 0 .55rem;
+
+    color: var(--text-soft);
+    font-size: .95rem;
+    line-height: 1.5;
+}
+
+.pp-dl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem 1.2rem;
+
+    font: 500 .66rem var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.pp-dl a {
+    color: var(--blue);
+    border-bottom: 1px solid currentColor;
+    text-decoration: none;
+}
+
+.pp-dl a:hover {
+    color: var(--blue-dark);
+}
+
+.pp-btn,
+.pp-go {
+    padding: .7rem 1.1rem;
+
+    background: var(--ink);
+    color: #fff;
+
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--blue);
+
+    cursor: pointer;
+
+    font: 700 .66rem var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.pp-btn:hover,
+.pp-go:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--blue);
+}
+
+.pp-btn.ghost {
+    background: transparent;
+    color: var(--ink);
+    box-shadow: none;
+}
+
+.pp-btn:disabled {
+    opacity: .35;
+    cursor: default;
+    transform: none;
+}
+
+.pp-link {
+    background: none;
+    border: 0;
+
+    color: var(--blue);
+
+    cursor: pointer;
+
+    font: 500 .66rem var(--mono);
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+
+/* ---------------------------------------------------------
+   PAST PAPER READER
+   --------------------------------------------------------- */
+
+.pp-mode {
+    display: none;
+
+    position: fixed;
+    inset: var(--nav-h) 0 0 0;
+
+    z-index: 90;
+
+    flex-direction: column;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(23, 87, 255, .045) 32px
+        ),
+        var(--paper);
+}
+
+.pp-mode.active {
+    display: flex;
+}
+
+body.pp-open {
+    overflow: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   TOP PAPER BAR
+   --------------------------------------------------------- */
+
+.pp-bar {
+    flex: none;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem 1rem;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: .6rem clamp(1rem, 3vw, 2rem);
+
+    background: var(--paper-light);
+    border-bottom: 2px solid var(--ink);
+}
+
+.pp-bar > b {
+    font: 700 .66rem var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.pp-barlinks {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.pp-barlinks a {
+    color: var(--blue);
+
+    font: 500 .66rem var(--mono);
+    text-transform: uppercase;
+}
+
+.pp-tabs {
+    display: flex;
+    gap: .35rem;
+    flex-wrap: wrap;
+}
+
+.pp-tab {
+    min-width: 44px;
+
+    padding: .4rem .75rem;
+
+    background: transparent;
+    border: 2px solid var(--ink);
+
+    cursor: pointer;
+
+    font: 700 .64rem var(--mono);
+    text-transform: uppercase;
+
+    transition:
+        background .15s ease,
+        color .15s ease;
+}
+
+.pp-tab:hover {
+    background: var(--paper-yellow);
+}
+
+.pp-tab.on {
+    background: var(--ink);
+    color: #fff;
+}
+
+
+/* ---------------------------------------------------------
+   PAPER BODY
+   --------------------------------------------------------- */
+
+.pp-body {
+    flex: 1 1 auto;
+    min-height: 0;
+
+    overflow: auto;
+}
+
+.pp-in {
+    width: min(1160px, calc(100% - 2rem));
+
+    margin: 0 auto;
+
+    padding:
+        clamp(2rem, 4vw, 3.5rem)
+        0
+        5rem;
+}
+
+
+/* ---------------------------------------------------------
+   QUESTION / INTRO HEADER
+   Match the lesson .part-heading hierarchy
+   --------------------------------------------------------- */
+
+.pp-head {
+    margin-bottom: 1.75rem;
+}
+
+.pp-head .pp-lab {
+    margin-top: 0;
+}
+
+.pp-head h2 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: clamp(2.1rem, 5vw, 4.7rem);
+    font-weight: 800;
+    line-height: .92;
+    letter-spacing: -.055em;
+}
+
+.pp-head p {
+    max-width: 65ch;
+
+    margin: 1rem 0 0;
+
+    color: var(--text-soft);
+
+    font-size: .98rem;
+    line-height: 1.7;
+}
+
+
+/* ---------------------------------------------------------
+   PAPER / QUESTION CARDS
+   --------------------------------------------------------- */
+
+.pp-sheet {
+    margin: 0 0 1.5rem;
+
+    padding: clamp(1.4rem, 3vw, 2.4rem);
+
+    background: var(--paper-light);
+
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-sm);
+}
+
+.pp-sheet h3 {
+    margin: .2rem 0 1rem;
+
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -.035em;
+}
+
+
+/*
+   This is the actual question text.
+
+   Previously this was only 1.05rem. It now follows
+   the same scale as lesson h4 elements.
+*/
+.pp-sheet h4 {
+    margin:
+        .25rem 0 1.25rem;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -.025em;
+}
+
+
+/* ---------------------------------------------------------
+   SMALL METADATA LABELS
+   --------------------------------------------------------- */
+
+.pp-lab {
+    display: block;
+
+    margin: 1rem 0 .45rem;
+
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .63rem;
+    font-weight: 500;
+
+    line-height: 1.35;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.pp-head .pp-lab {
+    margin-top: 0;
+}
+
+
+/*
+   IMPORTANT:
+   Drawing labels are NOT metadata.
+
+   This is the main fix for the tiny:
+   "NI₃ (nitrogen triiodide) — 109.5°"
+   typography.
+*/
+.pp-answer-label {
+    display: block;
+
+    margin: 0 0 .55rem;
+
+    color: var(--ink);
+
+    font-family: var(--mono);
+    font-size: clamp(.82rem, 1.2vw, 1rem);
+    font-weight: 600;
+
+    line-height: 1.35;
+    letter-spacing: .015em;
+}
+
+
+/* ---------------------------------------------------------
+   EQUATIONS
+   --------------------------------------------------------- */
+
+.pp-eq {
+    margin: .8rem 0;
+
+    padding: .75rem 1rem;
+
+    background: var(--paper);
+
+    border-left: 4px solid var(--blue);
+
+    color: var(--ink);
+
+    font-family: var(--mono);
+    font-size: clamp(.9rem, 1.4vw, 1.05rem);
+    font-weight: 500;
+    line-height: 1.7;
+}
+
+
+/* ---------------------------------------------------------
+   FACTS / INTRODUCTION
+   --------------------------------------------------------- */
+
+.pp-facts {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(190px, 1fr)
+    );
+
+    border: 2px solid var(--ink);
+}
+
+.pp-facts div {
+    padding: 1rem;
+
+    border-right: 2px solid var(--ink);
+
+    font-size: .88rem;
+    line-height: 1.5;
+
+    color: var(--text-soft);
+}
+
+.pp-facts div:last-child {
+    border-right: 0;
+}
+
+.pp-facts b {
+    display: block;
+
+    margin-bottom: .2rem;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.pp-fine {
+    display: block;
+
+    margin-top: .8rem;
+
+    color: var(--text-soft);
+}
+
+.pp-steps {
+    margin: .6rem 0 0;
+    padding-left: 1.3rem;
+
+    line-height: 1.7;
+}
+
+.pp-steps li + li {
+    margin-top: .4rem;
+}
+
+
+/* ---------------------------------------------------------
+   DRAWING ANSWERS
+   --------------------------------------------------------- */
+
+.pp-boxes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 1.5rem;
+
+    margin-top: 1.25rem;
+}
+
+.pp-cvw {
+    position: relative;
+
+    overflow: hidden;
+
+    background: #fff;
+
+    border: 1px solid rgba(22, 22, 22, .3);
+}
+
+.pp-cvi {
+    position: relative;
+}
+
+.pp-cvw svg.pp-bg {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    color: var(--ink);
+}
+
+.pp-cv {
+    display: block;
+
+    width: 100%;
+    height: 250px;
+
+    touch-action: none;
+    cursor: crosshair;
+}
+
+.pp-cvi svg.pp-bg + .pp-cv {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+}
+
+.pp-tools {
+    display: flex;
+    gap: .4rem;
+
+    padding: .4rem;
+
+    background: var(--paper);
+
+    border-top: 1px solid rgba(22, 22, 22, .2);
+}
+
+.pp-tools button {
+    padding: .3rem .65rem;
+
+    background: #fff;
+
+    border: 1px solid var(--ink);
+
+    cursor: pointer;
+
+    font: 500 .62rem var(--mono);
+}
+
+.pp-tools .sw {
+    width: 1.4rem;
+    height: 1.4rem;
+
+    padding: 0;
+
+    border-radius: 50%;
+}
+
+.pp-tools .sw.on {
+    outline: 2px solid var(--ink);
+    outline-offset: 1px;
+}
+
+
+/* ---------------------------------------------------------
+   TEXT ANSWERS
+   --------------------------------------------------------- */
+
+.pp-sheet textarea,
+.pp-sheet input[type="text"] {
+    width: 100%;
+
+    padding: .7rem .8rem;
+
+    background: var(--paper-light);
+    color: var(--ink);
+
+    border: 1px solid rgba(22, 22, 22, .3);
+
+    font:
+        400 .95rem/1.6
+        var(--body);
+}
+
+.pp-sheet textarea {
+    min-height: 10rem;
+    resize: vertical;
+}
+
+.pp-sheet textarea:focus,
+.pp-sheet input:focus {
+    outline: none;
+
+    border-color: var(--blue);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(23, 87, 255, .12);
+}
+
+
+/* ---------------------------------------------------------
+   MULTIPLE CHOICE
+   --------------------------------------------------------- */
+
+.pp-opts {
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+}
+
+.pp-opt {
+    padding: .65rem 1.1rem;
+
+    background: #fff;
+
+    border: 2px solid var(--ink);
+
+    cursor: pointer;
+
+    font:
+        700 .85rem
+        var(--display);
+
+    transition:
+        background .15s ease,
+        transform .15s ease;
+}
+
+.pp-opt:hover {
+    transform: translateY(-1px);
+}
+
+.pp-opt.on {
+    background: var(--paper-yellow);
+}
+
+
+/* ---------------------------------------------------------
+   TABLE QUESTIONS
+   --------------------------------------------------------- */
+
+.pp-tbl {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: .9rem;
+}
+
+.pp-tbl th,
+.pp-tbl td {
+    padding: .5rem;
+
+    border: 1px solid rgba(22, 22, 22, .3);
+
+    text-align: left;
+    vertical-align: middle;
+}
+
+.pp-tbl th {
+    background: var(--paper);
+
+    font:
+        700 .7rem
+        var(--mono);
+}
+
+.pp-tbl input {
+    padding: .4rem !important;
+    font-size: .88rem !important;
+}
+
+
+/* ---------------------------------------------------------
+   ENERGY DIAGRAMS
+   --------------------------------------------------------- */
+
+.pp-dgs {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 1.5rem;
+
+    margin-top: 1.25rem;
+}
+
+.pp-dg .pp-opt {
+    width: 100%;
+    margin-top: .5rem;
+}
+
+
+/* ---------------------------------------------------------
+   CALCULATIONS
+   --------------------------------------------------------- */
+
+.pp-row {
+    display: flex;
+    gap: .6rem;
+
+    align-items: center;
+
+    margin: .6rem 0;
+
+    flex-wrap: wrap;
+}
+
+.pp-row input {
+    width: 10rem !important;
+}
+
+
+/* ---------------------------------------------------------
+   SUBMIT
+   --------------------------------------------------------- */
+
+.pp-submit {
+    margin: 0 0 1.5rem;
+
+    padding: 1.2rem;
+
+    display: flex;
+    gap: 1rem;
+
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 2px dashed var(--ink);
+}
+
+.pp-submit p {
+    max-width: 52ch;
+
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: .9rem;
+    line-height: 1.6;
+}
+
+
+/* ---------------------------------------------------------
+   MARKING / FEEDBACK
+   --------------------------------------------------------- */
+
+.pp-marking {
+    background: var(--paper-blue);
+}
+
+.pp-fb {
+    margin: 0 0 1.2rem;
+    padding: 1rem;
+
+    background: var(--paper-light);
+
+    border: 1px solid rgba(22, 22, 22, .25);
+    border-left: 5px solid var(--blue);
+}
+
+.pp-fb h5 {
+    margin: .9rem 0 .4rem;
+
+    font:
+        700 .62rem
+        var(--mono);
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.pp-fb ul {
+    margin: 0 0 .8rem;
+    padding: 0;
+
+    list-style: none;
+}
+
+.pp-fb li {
+    position: relative;
+
+    padding: .2rem 0 .2rem 1.5rem;
+
+    font-size: .9rem;
+    line-height: 1.55;
+}
+
+.pp-fb li::before {
+    position: absolute;
+    left: 0;
+
+    font-weight: 800;
+}
+
+.pp-fb li.ok::before {
+    content: "✓";
+    color: var(--green);
+}
+
+.pp-fb li.no::before {
+    content: "○";
+    color: var(--red);
+}
+
+.pp-fb .mdl {
+    padding: .9rem;
+
+    background: var(--paper);
+
+    border: 1px solid rgba(22, 22, 22, .2);
+
+    font-size: .9rem;
+    line-height: 1.65;
+}
+
+.pp-fb .mdl svg {
+    width: 200px;
+
+    display: inline-block;
+
+    margin-right: 1rem;
+
+    vertical-align: middle;
+
+    color: var(--ink);
+}
+
+.pp-fb .you {
+    background: #fff;
+}
+
+.pp-fb small,
+.pp-mark small {
+    display: block;
+
+    margin-top: .5rem;
+
+    color: var(--text-soft);
+}
+
+.pp-mark {
+    margin-top: 1.5rem;
+    padding: 1.4rem;
+
+    background: var(--paper-yellow);
+
+    border: 2px solid var(--ink);
+}
+
+.pp-mark h3 {
+    margin: 0 0 .4rem;
+}
+
+.pp-mark label {
+    display: flex;
+    gap: .6rem;
+
+    align-items: flex-start;
+
+    padding: .35rem 0;
+
+    font-size: .92rem;
+    line-height: 1.5;
+
+    cursor: pointer;
+}
+
+.pp-mark .lv {
+    margin: .9rem 0 .2rem;
+
+    font:
+        700 .62rem
+        var(--mono);
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.pp-score {
+    margin-top: 1rem;
+
+    font:
+        800 2rem
+        var(--display);
+}
+
+.pp-score small {
+    display: inline;
+
+    font:
+        500 .7rem
+        var(--mono);
+}
+
+
+/* ---------------------------------------------------------
+   RESULTS
+   --------------------------------------------------------- */
+
+.pp-sum {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(200px, 1fr));
+
+    gap: 1rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.pp-sum .pp-sheet {
+    margin: 0;
+    text-align: center;
+}
+
+.pp-sum b {
+    display: block;
+
+    font:
+        800 2.6rem
+        var(--display);
+}
+
+.pp-rev {
+    display: flex;
+
+    gap: 1rem;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: .8rem 0;
+
+    border-bottom: 1px solid var(--soft-rule);
+
+    flex-wrap: wrap;
+}
+
+
+/* ---------------------------------------------------------
+   PAPER READER CONTROLS
+   --------------------------------------------------------- */
+
+.pp-controls {
+    flex: none;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding:
+        .7rem
+        clamp(1rem, 3vw, 2rem);
+
+    background: var(--paper-light);
+
+    border-top: 2px solid var(--ink);
+
+    font:
+        500 .75rem
+        var(--mono);
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 760px) {
+
+    .pp-in {
+        width: min(100% - 1.25rem, 1160px);
+        padding-top: 1.5rem;
+    }
+
+    .pp-boxes {
+        grid-template-columns: 1fr;
+    }
+
+    .pp-dgs {
+        grid-template-columns: 1fr;
+    }
+
+    .pp-cv {
+        height: 220px;
+    }
+
+    .pp-facts {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .pp-facts div:nth-child(2) {
+        border-right: 0;
+    }
+
+    .pp-facts div:nth-child(-n + 2) {
+        border-bottom: 2px solid var(--ink);
+    }
+}
+
+@media (max-width: 700px) {
+
+    .pp-card {
+        grid-template-columns: 1fr;
+    }
+
+    .pp-year {
+        width: 64px;
+        height: 64px;
+    }
+
+    .pp-bar {
+        align-items: flex-start;
+    }
+
+    .pp-tabs {
+        order: 3;
+        width: 100%;
+    }
+
+    .pp-head h2 {
+        font-size: clamp(2rem, 11vw, 3.5rem);
+    }
+
+    .pp-sheet {
+        padding: 1.2rem;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   PRINT
+   --------------------------------------------------------- */
+
+@media print {
+
+    .nav,
+    .site-footer,
+    .pp-bar,
+    .pp-controls,
+    .pp-submit,
+    .pp-tools {
+        display: none !important;
+    }
+
+    .pp-mode {
+        position: static;
+    }
+
+    .pp-body {
+        overflow: visible;
+    }
+}
+
+/* =========================================================
+   PAST PAPERS — OVERVIEW PAGE ALIGNMENT
+   Match the standard overview / lesson sections
+   ========================================================= */
+
+#pastPapers {
+    width: min(100%, 1270px);
+
+    margin:
+        0rem auto 0;
+
+    padding:
+        0
+        clamp(1.25rem, 5vw, 3rem)
+        5rem;
+}
+
+#pastPapers .overview-section-heading {
+    margin-bottom: 1rem;
+}
+
+
+#pastPapers .overview-section-heading .numbering {
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .7rem;
+    font-weight: 500;
+}
+
+#pastPapers .pp-intro {
+    max-width: 65ch;
+
+    margin:
+        0 0 2rem;
+
+    color: var(--text-soft);
+
+    font-size: .95rem;
+    line-height: 1.7;
+}
+
+
+
+/* =========================================================
+   PAST PAPER — ANSWER BOX LABELS
+   These are question-specific headings, not metadata.
+   ========================================================= */
+
+.pp-answer-label {
+    display: block;
+
+    margin:
+        0 0 .65rem;
+
+    color: var(--ink);
+
+    font-family: var(--display);
+    font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+    font-weight: 800;
+
+    line-height: 1.05;
+    letter-spacing: -.025em;
+}
+
+.pp-answer-box {
+    min-width: 0;
+}
+
+/* =========================================================
+   GIVEN EXAMPLE — H₂S
+   ========================================================= */
+
+.pp-given {
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 260px)
+        1fr;
+
+    gap: 1.25rem;
+
+    align-items: center;
+
+    margin:
+        1.5rem 0 2rem;
+
+    padding: 1rem 1.25rem;
+
+    background: var(--paper-blue);
+
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+.pp-given-structure {
+    display: grid;
+    place-items: center;
+
+    min-height: 125px;
+}
+
+.pp-given-svg {
+    display: block;
+
+    width: 100%;
+    max-width: 240px;
+
+    color: var(--ink);
+}
+
+.pp-given-text {
+    display: flex;
+
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.pp-given-label {
+    color: var(--blue);
+
+    font-family: var(--mono);
+    font-size: .65rem;
+    font-weight: 600;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.pp-given-text strong {
+    font-family: var(--display);
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+}
+
+.pp-given-text > span:last-child {
+    color: var(--text-soft);
+
+    font-size: .9rem;
+}
+
+@media (max-width: 700px) {
+
+    .pp-given {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .pp-given-structure {
+        min-height: 100px;
+    }
+
+    .pp-given-text {
+        align-items: center;
+    }
+}
+
+/* ===== Past paper — given image ===== */
+
+.pp-given {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.25rem;
+    align-items: center;
+    margin: 1.5rem 0 2rem;
+    padding: 1rem 1.25rem;
+
+    background: var(--paper-blue);
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+.pp-given-structure {
+    display: grid;
+    place-items: center;
+    min-height: 110px;
+}
+
+.pp-given-image {
+    display: block;
+    width: 100%;
+    max-width: 190px;
+    height: auto;
+    object-fit: contain;
+}
+
+.pp-given-text {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.pp-given-label {
+    color: var(--blue);
+    font-family: var(--mono);
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.pp-given-text strong {
+    font-family: var(--display);
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    font-weight: 800;
+    line-height: 1.05;
+}
+
+.pp-given-text > span:last-child {
+    color: var(--text-soft);
+    font-size: .9rem;
+}
+
+@media (max-width: 700px) {
+    .pp-given {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .pp-given-structure {
+        min-height: 90px;
+    }
+
+    .pp-given-image {
+        max-width: 160px;
+    }
+
+    .pp-given-text {
+        align-items: center;
+    }
+}
+
+
+/* =========================================================
+   91164 — BOND ENERGY / BUTANE WORKED EXAMPLE
+   ========================================================= */
+
+.bond-reaction-equation {
+    margin: 1.25rem 0 1.1rem;
+    padding: 1rem 1.15rem;
+    border: 2px solid var(--ink);
+    background: var(--paper-blue);
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+.bond-equation-label,
+.butane-image-kicker {
+    display: block;
+    margin-bottom: .65rem;
+    color: var(--blue);
+    font-family: var(--mono);
+    font-size: .66rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.bond-equation-formula {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-family: var(--display);
+    font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.bond-equation-plus,
+.bond-equation-arrow {
+    color: var(--blue);
+    font-family: var(--mono);
+    font-weight: 700;
+    padding-inline: .15rem;
+}
+
+.bond-reaction-equation > small {
+    display: block;
+    margin-top: .45rem;
+    color: var(--muted);
+    font-size: .78rem;
+    text-align: center;
+}
+
+
+/* BUTANE IMAGE PLACEHOLDER */
+
+.butane-image-slot {
+    width: min(100%, 460px);
+    margin: 1.25rem auto 1.5rem;
+    padding: 1rem;
+    border: 1.5px dashed var(--ink);
+    background: var(--paper-light);
+    text-align: center;
+}
+
+.butane-image-frame {
+    min-height: 112px;
+    display: grid;
+    place-items: center;
+    padding: .75rem;
+    border: 1px solid var(--soft-rule);
+    background:
+        repeating-linear-gradient(
+            135deg,
+            transparent 0,
+            transparent 10px,
+            rgba(23, 54, 131, .045) 10px,
+            rgba(23, 54, 131, .045) 20px
+        );
+}
+
+.butane-image-frame img {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    max-height: 190px;
+    object-fit: contain;
+    margin-inline: auto;
+}
+
+.butane-image-placeholder {
+    padding: .6rem 1rem;
+    border: 1px solid var(--soft-rule);
+    background: var(--paper);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .02em;
+}
+
+.butane-image-slot > small {
+    display: block;
+    margin-top: .65rem;
+    color: var(--muted);
+    font-size: .72rem;
+    line-height: 1.5;
+}
+
+
+/* MOBILE LAYOUT */
+
+@media (max-width: 600px) {
+
+    .bond-reaction-equation {
+        padding: .85rem .65rem;
+    }
+
+    .bond-equation-formula {
+        gap: .3rem;
+        font-size: 1rem;
+    }
+
+    .butane-image-slot {
+        padding: .75rem;
+    }
+
+}
+
+/* ===== Side-by-side bond structure comparison ===== */
+
+.bond-structure-comparison {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 900px;
+    margin: 1.5rem auto;
+}
+
+.bond-structure-comparison .butane-image-slot {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 1rem;
+}
+
+.bond-structure-comparison .butane-image-kicker {
+    min-height: 2.5em;
+    line-height: 1.4;
+}
+
+.bond-structure-comparison .butane-image-frame {
+    box-sizing: border-box;
+    height: 190px;
+    min-height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+}
+
+.bond-structure-comparison .butane-image-frame img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Stack on small screens */
+@media (max-width: 600px) {
+    .bond-structure-comparison {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .bond-structure-comparison .butane-image-frame {
+        height: 170px;
+        min-height: 170px;
+    }
+}
+
+
+
+
+/* ===== Ionic solids — larger structure images ===== */
+
+.solids-intro + .paper .lesson-figure-pair-images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.solids-intro + .paper .lesson-figure-pair-image {
+    flex: 1 1 320px;
+    width: 320px;
+    max-width: 320px;
+    min-width: 0;
+    margin-inline: auto;
+}
+
+.solids-intro + .paper .lesson-figure-pair-image img {
+    display: block;
+    width: 100%;
+    height: 250px;
+    max-height: 250px;
+    object-fit: contain;
+    margin-inline: auto;
+}
+
+/* Smaller screens */
+@media (max-width: 650px) {
+    .solids-intro + .paper .lesson-figure-pair-images {
+        gap: 0.75rem;
+    }
+
+    .solids-intro + .paper .lesson-figure-pair-image {
+        flex-basis: 0;
+        width: calc(50% - 0.4rem);
+        max-width: none;
+    }
+
+    .solids-intro + .paper .lesson-figure-pair-image img {
+        height: 180px;
+        max-height: 180px;
+    }
+}
+
+/* ===== Silicon dioxide — smaller structure image ===== */
+
+.solids-feature-image {
+    width: 100%;
+    max-width: 520px;
+    margin: 1.25rem auto;
+}
+
+.solids-feature-image img {
+    display: block;
+    width: 100%;
+    height: 280px;
+    max-height: 280px;
+    object-fit: contain;
+    margin-inline: auto;
+}
+
+/* Mobile */
+@media (max-width: 650px) {
+    .solids-feature-image {
+        max-width: 380px;
+    }
+
+    .solids-feature-image img {
+        height: 210px;
+        max-height: 210px;
+    }
+}
+
+
+/* =========================================================
+   SOLIDS COMPARISON — TEACHING GUIDE + WRITE-IN TABLE
+   ========================================================= */
+
+.solids-guide .method {
+    margin: 1.1rem 0;
+}
+
+.solids-guide .method-text h4 {
+    margin-top: .25rem;
+}
+
+.solids-guide .method-text p:last-child {
+    margin-bottom: 0;
+}
+
+.solids-guide > h3:not(:first-of-type) {
+    margin-top: 2rem;
+}
+
+.solids-write-in {
+    margin-top: 1.5rem;
+}
+
+.solids-answer-table-wrap {
+    width: 100%;
+    margin-top: 1.25rem;
+    overflow-x: auto;
+    border: 2px solid var(--ink);
+    background: var(--paper-light);
+}
+
+.solids-answer-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.solids-answer-table th,
+.solids-answer-table td {
+    padding: .75rem;
+    border-right: 1px solid var(--soft-rule);
+    border-bottom: 1px solid var(--soft-rule);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.solids-answer-table thead th {
+    background: var(--paper-blue);
+    font-family: var(--mono);
+    font-size: .7rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.solids-answer-table tbody th {
+    width: 16%;
+    background: var(--paper);
+    font-family: var(--display);
+    font-size: 1rem;
+}
+
+.solids-answer-table tbody th small {
+    display: inline-block;
+    margin-top: .2rem;
+    color: var(--muted);
+    font-family: var(--body);
+    font-size: .72rem;
+    font-weight: 400;
+}
+
+.solids-answer-table input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: .6rem;
+    border: 1.5px solid var(--soft-rule);
+    border-radius: 0;
+    background: white;
+    color: var(--ink);
+    font-size: .88rem;
+}
+
+.solids-answer-table input:focus {
+    border-color: var(--blue);
+    outline: 2px solid var(--blue);
+    outline-offset: 1px;
+}
+
+.solids-activity-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem;
+    margin-top: 1.25rem;
+}
+
+.solids-activity-actions .ve-quiz-score {
+    font-family: var(--mono);
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.answer-correct {
+    border-color: #1c8a3c !important;
+    background-color: #e1f4e6 !important;
+}
+
+.answer-incorrect {
+    border-color: #c63a2b !important;
+    background-color: #fff0ed !important;
+}
+
+.solids-mark-scheme {
+    margin-top: 1.25rem;
+}
+
+.solids-mark-scheme .wq-exemplar {
+    margin: .75rem 0;
+}
+
+@media (max-width: 650px) {
+    .solids-answer-table {
+        min-width: 720px;
+    }
+
+    .solids-activity-actions {
+        align-items: flex-start;
+    }
+}
+
+/* Water–ion diagram: wide, clean image box */
+.solids-property-image {
+    width: 100%;
+    max-width: 680px;
+    aspect-ratio: 16 / 9;
+    margin: 1.5rem auto;
+    padding: 1rem;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fffdf5;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.solids-property-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: contain;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .solids-property-image {
+        aspect-ratio: 4 / 3;
+        padding: .5rem;
+    }
+}
+
+.lesson-figure-image {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.lesson-figure-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* =========================================================
+   MOBILE QA FIXES — prevent title overflow and keep lesson
+   navigation separate from the past-paper directory.
+   ========================================================= */
+@media (max-width: 700px) {
+    /* Keep every grid/flex child shrinkable on narrow screens. */
+    .home main,
+    .home .manifesto,
+    .home .manifesto-heading,
+    .home .manifesto .title,
+    .home .manifesto-grid,
+    .home .hero-main,
+    .home .hero-heading,
+    .standard-app,
+    .standard-overview,
+    .lesson-mode,
+    .lesson-viewport,
+    .lesson-slide,
+    .paper,
+    .lesson-figure,
+    .lesson-figure-large,
+    .lesson-figure-pair,
+    .subject-grid,
+    .subject-card {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .home .manifesto .title {
+        width: 100%;
+        font-size: clamp(2.35rem, 10.5vw, 4.6rem);
+        letter-spacing: -.07em;
+        overflow-wrap: anywhere;
+    }
+
+    .home .manifesto .title-line {
+        width: auto;
+        max-width: 100%;
+    }
+
+    .home .manifesto .title-subline {
+        font-size: clamp(1.25rem, 5.5vw, 2.1rem);
+        line-height: 1.1;
+        flex-wrap: wrap;
+    }
+
+    .home .hero .title {
+        font-size: clamp(3.5rem, 15vw, 6rem);
+        max-width: 100%;
+    }
+
+    /* Images and embedded content must never force the viewport wider. */
+    img,
+    video,
+    iframe,
+    canvas,
+    svg {
+        max-width: 100%;
+    }
+
+    .lesson-slide img,
+    .paper img {
+        height: auto;
+        object-fit: contain;
+    }
+
+    /* The lesson reader scrolls vertically; wide teaching diagrams may
+       scroll within their own wrapper only where explicitly intended. */
+    .lesson-slide,
+    .lesson-viewport,
+    .standard-overview {
+        overflow-x: clip;
+    }
+
+    .lesson-figure-image,
+    .lesson-figure-large-image,
+    .lesson-figure-pair-image {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .lesson-figure-image img,
+    .lesson-figure-large-image img,
+    .lesson-figure-pair-image img {
+        max-width: 100%;
+    }
+
+    .pp-list,
+    .pp-card,
+    .pp-card > span {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .pp-card {
+        flex-wrap: wrap;
+        overflow-wrap: anywhere;
+    }
+
+    .pp-dl {
+        flex-wrap: wrap;
+        gap: .5rem;
+    }
+
+    .pp-dl a {
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 380px) {
+    .home .manifesto .title {
+        font-size: clamp(2.1rem, 10vw, 2.6rem);
+    }
+
+    .home .manifesto .title-subline {
+        font-size: 1.15rem;
+    }
+
+    .nav a:not(.brand) {
+        padding-inline: .5rem;
+        font-size: .62rem;
+    }
+}
+
+/* =========================================================
+   FOOTER FIX — KEEP THE FOOTER AT THE END OF THE PAGE
+   ========================================================= */
+
+html {
+    min-height: 100%;
+}
+
+body:not(.lesson-reading) {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+body:not(.lesson-reading) > main {
+    flex: 1 0 auto;
+    min-width: 0;
+}
+
+body:not(.lesson-reading) > .site-footer {
+    flex: 0 0 auto;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   MOBILE HOMEPAGE — FOOTER + MANIFESTO REFINEMENT
+   Paste at the VERY END of style.css
+   ========================================================= */
+
+/* --- 1. Keep the footer flush with the page bottom --- */
+
+html,
+body {
+    margin-bottom: 0;
+}
+
+body.home {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.home > main {
+    flex: 1 0 auto;
+    min-width: 0;
+}
+
+body.home > .site-footer {
+    flex-shrink: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+    background: #161616;
+}
+
+/* Make sure the footer's final child adds no extra bottom gap. */
+body.home > .site-footer > :last-child {
+    margin-bottom: 0;
+}
+
+
+/* --- 2. Improve the manifesto headline on phones --- */
+
+@media (max-width: 700px) {
+    .home .manifesto {
+        width: calc(100% - 2rem);
+        max-width: 100%;
+        min-width: 0;
+        margin-inline: auto;
+        padding-top: 3.5rem;
+        padding-bottom: 2rem;
+        overflow: visible;
+    }
+
+    .home .manifesto-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.4rem;
+        min-width: 0;
+    }
+
+    .home .manifesto .title {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin: 0;
+        font-family: "Archivo", sans-serif;
+        font-size: clamp(3.25rem, 13.5vw, 5.2rem);
+        font-weight: 900;
+        line-height: .83;
+        letter-spacing: -.078em;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
+    .home .manifesto .title-line {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        white-space: nowrap;
+    }
+
+    .home .manifesto .title-everything {
+        color: var(--home-ink);
+    }
+
+    .home .manifesto .title-everywhere {
+        color: var(--home-blue);
+        margin-left: 0;
+    }
+
+    .home .manifesto .title-subline {
+        display: block;
+        max-width: 100%;
+        margin-top: .3em;
+        font-size: clamp(1.65rem, 7.2vw, 2.5rem);
+        line-height: 1;
+        letter-spacing: -.055em;
+        white-space: normal;
+    }
+
+    .home .manifesto .title-context {
+        font-size: .48em;
+        letter-spacing: -.02em;
+        white-space: nowrap;
+    }
+
+    .home .manifesto-heading > p {
+        grid-column: auto;
+        max-width: 38rem;
+        margin-top: .4rem;
+        font-size: clamp(1.05rem, 4.4vw, 1.3rem);
+        line-height: 1.65;
+    }
+
+    .home .manifesto .section-label {
+        font-size: clamp(.9rem, 3.8vw, 1.1rem);
+        line-height: 1.5;
+        letter-spacing: .04em;
+    }
+
+    /* Keep the final card comfortably separated from the footer. */
+    .home .manifesto-grid {
+        min-width: 0;
+        margin-bottom: 1.5rem;
+    }
+}
+
+
+/* Smaller phones: reduce the title just enough to prevent clipping. */
+@media (max-width: 380px) {
+    .home .manifesto .title {
+        font-size: clamp(2.85rem, 13.1vw, 3.4rem);
+    }
+
+    .home .manifesto .title-subline {
+        font-size: clamp(1.45rem, 7vw, 1.8rem);
+    }
+
+    .home .manifesto {
+        width: calc(100% - 1.5rem);
+    }
+}

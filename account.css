@@ -1,0 +1,458 @@
+
+/* =========================================================
+   ALL FRICTION — ACCOUNT PAGES
+   Login, onboarding and dashboard
+   ========================================================= */
+
+/* ===== PAGE BACKGROUND & LAYOUT ===== */
+
+html {
+    min-height: 100%;
+    margin: 0;
+    background: var(--paper);
+}
+
+body.account-page {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(23, 87, 255, .045) 32px
+        ),
+        var(--paper);
+}
+
+/* ===== MAIN ACCOUNT CONTENT ===== */
+
+.acct-wrap {
+    width: min(1100px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) 0 4rem;
+    box-sizing: border-box;
+}
+
+/* Narrow layout for account pages */
+.acct-narrow {
+    width: min(700px, calc(100% - 2rem));
+}
+
+/* Sign-in page: heading, description and card share one edge */
+body.account-page .acct-wrap.acct-narrow {
+    width: min(700px, calc(100% - 2rem));
+    margin-inline: auto;
+}
+
+/* ===== HEADINGS ===== */
+
+.acct-kicker {
+    display: block;
+    margin-bottom: .6rem;
+    color: var(--blue);
+    font: 500 .7rem var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.acct-title {
+    margin: 0 0 1rem;
+    font-family: var(--display);
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: .9;
+    letter-spacing: -.06em;
+}
+
+.acct-lead {
+    max-width: 55ch;
+    margin: 0 0 2rem;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+/* ===== CARDS ===== */
+
+.acct-card {
+    width: 100%;
+    box-sizing: border-box;
+
+    background: var(--paper-light);
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-sm);
+
+    padding: clamp(1.2rem, 3vw, 2rem);
+    margin: 0 0 1.5rem;
+}
+
+.acct-card h2 {
+    margin: 0 0 .8rem;
+    font-family: var(--display);
+    font-size: 1.5rem;
+    letter-spacing: -.03em;
+}
+
+.acct-card h3 {
+    margin: 0 0 .3rem;
+    font-family: var(--display);
+    font-size: 1.15rem;
+}
+
+.acct-card p {
+    margin: .3rem 0 0;
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.acct-small {
+    font-size: .8rem;
+    color: var(--muted);
+}
+
+.acct-msg {
+    min-height: 1.2em;
+    margin-top: .8rem;
+    font: 500 .72rem var(--mono);
+    color: #c8380c;
+}
+
+.acct-msg.ok {
+    color: var(--green);
+}
+
+/* ===== BUTTONS ===== */
+
+.acct-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+
+    padding: .75rem 1.1rem;
+
+    background: var(--ink);
+    color: #fff;
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--blue);
+
+    cursor: pointer;
+    text-decoration: none;
+
+    font: 600 .7rem var(--mono);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+
+    transition: transform .15s, box-shadow .15s;
+}
+
+.acct-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--blue);
+}
+
+.acct-btn.ghost {
+    background: var(--paper-light);
+    color: var(--ink);
+    box-shadow: 3px 3px 0 rgba(22, 22, 22, .16);
+}
+
+.acct-btn.danger {
+    background: #fff;
+    color: #c8380c;
+    border-color: #c8380c;
+    box-shadow: 3px 3px 0 rgba(200, 56, 12, .2);
+}
+
+/* ===== SIGN-IN CARD & PROVIDER BUTTONS ===== */
+
+/* Keep the white box compact */
+body.account-page .acct-wrap.acct-narrow > .acct-card {
+    width: 100%;
+    max-width: none;
+    margin: 2.25rem 0 1.5rem;
+    padding: clamp(1.2rem, 3vw, 2rem);
+}
+
+/* Narrow, centred buttons with a small white border around them */
+.oauth-stack {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+
+    width: 100%;
+    max-width: 408px;
+
+    margin-inline: auto;
+}
+
+.oauth-stack .acct-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: .95rem 1.1rem;
+}
+
+/* Sign-in disclaimer */
+body.account-page .acct-card .acct-small {
+    margin-top: 1.5rem;
+}
+
+/* ===== FOOTER ===== */
+
+body.account-page > .site-footer {
+    width: 100%;
+    margin: auto 0 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+/* Main content fills the space above the footer */
+body.account-page > .acct-wrap {
+    flex: 1 0 auto;
+}
+
+/* ===== FORMS ===== */
+
+.acct-form label {
+    display: block;
+    margin-top: 1.1rem;
+    font: 600 .72rem var(--mono);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.acct-form input[type="text"],
+.acct-form select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: .4rem;
+    padding: .7rem .8rem;
+
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid rgba(22, 22, 22, .35);
+
+    font: 400 .95rem var(--body);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.acct-form input:focus,
+.acct-form select:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px rgba(23, 87, 255, .15);
+}
+
+.acct-check {
+    display: flex !important;
+    gap: .6rem;
+    align-items: flex-start;
+
+    text-transform: none !important;
+    font: 400 .85rem/1.5 var(--body) !important;
+    letter-spacing: 0 !important;
+}
+
+.acct-check input {
+    margin-top: .25rem;
+}
+
+/* ===== SCHOOL SEARCH ===== */
+
+.school-box {
+    position: relative;
+}
+
+.school-results {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 5;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    background: #fff;
+    border: 1px solid var(--ink);
+    box-shadow: 4px 4px 0 rgba(22, 22, 22, .15);
+
+    max-height: 260px;
+    overflow: auto;
+}
+
+.school-results button {
+    width: 100%;
+    padding: .6rem .8rem;
+
+    text-align: left;
+    background: #fff;
+    border: 0;
+    border-bottom: 1px solid rgba(22, 22, 22, .1);
+
+    cursor: pointer;
+    font: 400 .9rem var(--body);
+}
+
+.school-results button:hover {
+    background: var(--paper-yellow);
+}
+
+.school-results small {
+    color: var(--muted);
+}
+
+/* ===== DASHBOARD ===== */
+
+.dash-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.dash-feature {
+    background: var(--paper-yellow);
+}
+
+.dash-feature.alt {
+    background: var(--paper-blue);
+}
+
+.dash-label {
+    display: block;
+    margin-bottom: .5rem;
+    font: 700 .62rem var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.bar {
+    height: 10px;
+    margin: .6rem 0;
+    background: rgba(22, 22, 22, .1);
+    border: 1px solid var(--ink);
+}
+
+.bar > i {
+    display: block;
+    height: 100%;
+    background: var(--blue);
+}
+
+.lesson-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .8rem;
+    align-items: center;
+
+    padding: .7rem 0;
+    border-top: 1px solid rgba(22, 22, 22, .14);
+}
+
+.lesson-row a {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.lesson-row a:hover {
+    color: var(--blue);
+}
+
+.lesson-row .pct {
+    font: 500 .7rem var(--mono);
+    color: var(--muted);
+}
+
+.pick-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: .6rem 0 1rem;
+}
+
+.pick {
+    padding: .55rem .8rem;
+    background: #fff;
+    border: 2px solid var(--ink);
+    cursor: pointer;
+    font: 600 .72rem var(--mono);
+}
+
+.pick.on {
+    background: var(--ink);
+    color: #fff;
+}
+
+.pick small {
+    opacity: .6;
+}
+
+/* ===== SIGN-IN CHIP ON LESSON PAGES ===== */
+
+.af-chip {
+    position: fixed;
+    left: 1rem;
+    bottom: 78px;
+    z-index: 80;
+
+    max-width: 260px;
+    padding: .6rem .8rem;
+
+    background: var(--paper-yellow);
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+
+    font: 500 .68rem/1.5 var(--mono);
+}
+
+.af-chip a {
+    color: var(--blue);
+}
+
+.af-chip button {
+    margin-left: .4rem;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 600px) {
+    .acct-wrap {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    body.account-page .acct-wrap.acct-narrow {
+        width: calc(100% - 2rem);
+    }
+
+    body.account-page .acct-wrap.acct-narrow > .acct-card {
+        margin-top: 1.75rem;
+        padding: 1.2rem;
+    }
+
+    .oauth-stack {
+        max-width: 100%;
+    }
+
+    .dash-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

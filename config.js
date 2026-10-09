@@ -1,0 +1,4 @@
+window.AF_CONFIG = {
+  SUPABASE_URL: 'https://rsynfefloyksfwluthrl.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzeW5mZWZsb3lrc2Z3bHV0aHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0OTU1MjAsImV4cCI6MjEwNzA3MTUyMH0.a_LSu2lHlhG4-62GnIRERp-8XUOyqx6JbEc9tc1z2Nc'
+};
